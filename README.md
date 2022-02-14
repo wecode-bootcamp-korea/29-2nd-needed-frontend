@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# needed
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 요약
 
-## Available Scripts
+> 👉 I need YOU for the world’s leading companies!
 
-In the project directory, you can run:
+1. 다양한 일자리를 카테고리별로 나눠 구직자에게 접근성이 용이하게 합니다.
+2. 잡포스팅 외에도 다양한 이벤트, 직군별 연봉정보 등을 제공합니다.
+3. 각종 테마에 대하여 서로 의견을 주고받을 수 있는 커리어 커뮤니티를 가지고 있습니다.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 프로젝트 기간
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2022/02/14 ~ 2022/02/25
 
-### `npm test`
+## Used Tools
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- HTML, CSS
+- JavaScript
+- React
+- Styled Component
 
-### `npm run build`
+## 팀원 소개
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+|           | 팀원                           |
+| --------- | ------------------------------ |
+| front-end | 곽승현, 박무선, 윤남주, 장예지 |
+| back-end  | 김준영, 김성수                 |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 구현 예정 목록
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. 채용
+2. 직군별 연봉
+3. 이력서 업로드
+4. 소셜 로그인, 소셜 회원가입, 메인 페이지
+5. wanted+ 탭
+6. 마이페이지
+7. 검색
 
-### `npm run eject`
+## 구성원 별 담당 역할
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+|        | 구현 파트                                               |
+| ------ | ------------------------------------------------------- |
+| 곽승현 | 기업 페이지, footer, wanted+, 직군별연봉                |
+| 박무선 | 이력서 업로드, 메인 페이지, 소셜로그인                  |
+| 윤남주 | 이력서 업로드, 채용 페이지, 채용 상세페이지, 마이페이지 |
+| 장예지 | 소셜 로그인, Nav, 검색창                                |
