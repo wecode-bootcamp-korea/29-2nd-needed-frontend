@@ -7,7 +7,7 @@ export const SIDEBAR_INSIDE = [
   {
     id: 1,
     title: '개발',
-    url: '/recruitments/programing',
+    url: '/recruitments/programming',
     subNav: [
       {
         title: '프론트엔드',
@@ -41,7 +41,7 @@ export const SIDEBAR_INSIDE = [
     subNav: [
       {
         title: '외국어교육',
-        url: '/recruitments/education/foreignlanguage',
+        url: '/recruitments/education/foreignlang',
       },
       {
         title: '교육 기획',

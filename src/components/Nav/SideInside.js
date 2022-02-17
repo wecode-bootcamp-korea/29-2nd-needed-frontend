@@ -6,7 +6,7 @@ function SideInside({ id, title, url, subNav }) {
   const [subTitle, setSubTitle] = useState(false);
 
   const showSubMenu = () => {
-    setSubTitle(!subTitle);
+    setSubTitle(prev => !prev);
   };
 
   return (
@@ -22,7 +22,7 @@ function SideInside({ id, title, url, subNav }) {
             return (
               <Lists key={id}>
                 <SubLink to={list.url}>
-                  <Title onClick={subNav && showSubMenu}>{list.title}</Title>
+                  <Title>{list.title}</Title>
                 </SubLink>
               </Lists>
             );
@@ -39,7 +39,7 @@ const StyledLink = styled(Link)`
 const SlideList = styled.li`
   list-style: none;
   width: 100%;
-  height: 17%;
+  height: 16.8%;
   color: black;
   padding: 15px 20px;
   cursor: pointer;
@@ -63,9 +63,9 @@ const SubMenu = styled.div`
   top: -1px;
   right: -180px;
   width: 180px;
-  height: 250px;
+  height: 280px;
   background-color: #62d9ff;
-  display: ${props => (props.subTitle ? 'display' : 'none')};
+  display: ${props => (props.subTitle ? 'none' : 'display')};
 `;
 
 const SubLink = styled(Link)`

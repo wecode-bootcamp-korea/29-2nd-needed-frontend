@@ -7,7 +7,7 @@ const Nav = () => {
   const [displayShow, setDisplayShow] = useState(false);
 
   const showSidebar = () => {
-    setDisplayShow(!displayShow);
+    setDisplayShow(prev => !prev);
   };
 
   return (
@@ -16,9 +16,9 @@ const Nav = () => {
         <NavContainer>
           <NavLeft>
             <NavBt onClick={showSidebar}>
-              <MenuImg src="images/nav/menu.png" alt="menu" />
+              <MenuImg src="/images/nav/menu.png" alt="menu" />
             </NavBt>
-            <Logo src="images/nav/needed.png" alt="log" />
+            <Logo src="/images/nav/needed.png" alt="log" />
           </NavLeft>
           <TextBox>
             <Menu>채용</Menu>
@@ -31,7 +31,7 @@ const Nav = () => {
           </TextBox>
           <NavRight>
             <SearchWrap>
-              <Search src="images/nav/search.png" alt="search" />
+              <Search src="/images/nav/search.png" alt="search" />
             </SearchWrap>
             <SignUpBt>회원가입/로그인</SignUpBt>
             <RoundBt>기업서비스</RoundBt>
@@ -39,12 +39,15 @@ const Nav = () => {
         </NavContainer>
       </Navigation>
       <SlideWrap>
-        <SlideBox displayShow={displayShow}>
+        <SlideBox
+          displayShow={displayShow}
+          onMouseOver={() => setDisplayShow(true)}
+          onMouseOut={() => setDisplayShow(false)}
+        >
           {SIDEBAR_INSIDE.map(list => {
             return (
               <SideInside
-                key={list.index}
-                id={list.id}
+                key={list.id}
                 title={list.title}
                 url={list.url}
                 subNav={list.subNav}
@@ -62,6 +65,7 @@ const Navigation = styled.nav`
   position: fixed;
   top: 0;
   font-size: 14px;
+  z-index: 999;
 `;
 
 const NavContainer = styled.div`
@@ -165,15 +169,17 @@ const RoundBt = styled.button`
 
 const SlideWrap = styled.div`
   display: flex;
+  position: absolute;
+  top: 50px;
   width: 100%;
+  height: 100%;
 `;
 
 const SlideBox = styled.div`
-  position: relative;
+  position: absolute;
   width: 180px;
-  height: 250px;
-  margin-left: 150px;
-  margin-top: 50px;
+  height: 280px;
+  left: 160px;
   background-color: white;
   border: 1px solid #e1e2e3;
   display: ${props => (props.displayShow ? 'display' : 'none')};
