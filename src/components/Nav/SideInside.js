@@ -65,7 +65,7 @@ const SubMenu = styled.div`
   width: 180px;
   height: 280px;
   background-color: #62d9ff;
-  display: ${props => (props.subTitle ? 'none' : 'display')};
+  display: ${props => (props.subTitle ? 'display' : 'none')};
 `;
 
 const SubLink = styled(Link)`
