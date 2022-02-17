@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SIDEBAR_INSIDE } from './SIDEBAR_INSIDE';
 import SideInside from './SideInside';
+import LogIn from '../../pages/Login/Login';
 
 const Nav = () => {
-  const [displayShow, setDisplayShow] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const showSidebar = () => {
-    setDisplayShow(prev => !prev);
+  const ModalHandler = () => {
+    setModalOpen(prev => !prev);
   };
 
   return (
@@ -15,8 +16,8 @@ const Nav = () => {
       <Navigation>
         <NavContainer>
           <NavLeft>
-            <NavBt onClick={showSidebar}>
-              <MenuImg src="/images/nav/menu.png" alt="menu" />
+            <NavBt onClick={ModalHandler}>
+              <MenuImg src="images/nav/menu.png" alt="menu" />
             </NavBt>
             <Logo src="/images/nav/needed.png" alt="log" />
           </NavLeft>
@@ -33,17 +34,13 @@ const Nav = () => {
             <SearchWrap>
               <Search src="/images/nav/search.png" alt="search" />
             </SearchWrap>
-            <SignUpBt>회원가입/로그인</SignUpBt>
+            <LogIn />
             <RoundBt>기업서비스</RoundBt>
           </NavRight>
         </NavContainer>
       </Navigation>
       <SlideWrap>
-        <SlideBox
-          displayShow={displayShow}
-          onMouseOver={() => setDisplayShow(true)}
-          onMouseOut={() => setDisplayShow(false)}
-        >
+        <SlideBox displayShow={ModalHandler}>
           {SIDEBAR_INSIDE.map(list => {
             return (
               <SideInside
@@ -144,17 +141,6 @@ const Search = styled.img`
   width: 18px;
   height: 18px;
 `;
-
-const SignUpBt = styled.button`
-  height: 100%;
-  color: #333;
-  font-weight: 400;
-  border: none;
-  background-color: white;
-  padding: 5px 20px;
-  cursor: pointer;
-`;
-
 const RoundBt = styled.button`
   border: 1px solid #e1e2e3;
   background-color: white;
