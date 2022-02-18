@@ -146,5 +146,4 @@ const BtWrap = styled.div`
   height: 70px;
   width: 100%;
 `;
-
 export default Login;
