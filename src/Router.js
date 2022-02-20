@@ -9,6 +9,7 @@ import JobDetail from './pages/JobDetail/JobDetail';
 import Login from './pages/Login/Login';
 import Company from './pages/Company/Company';
 import Salary from './pages/Salary/Salary';
+import MyPage from './pages/MyPage/MyPage';
 
 const Router = () => {
   return (
@@ -27,6 +28,7 @@ const Router = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/company" element={<Company />} />
         <Route path="/salary" element={<Salary />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
