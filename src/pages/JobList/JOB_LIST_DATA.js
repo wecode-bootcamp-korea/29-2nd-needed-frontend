@@ -34,12 +34,12 @@ export const JOB_CATEGORY = {
     categories: [
       {
         id: 1,
-        category: '프론트엔드 개발',
+        category: '프론트엔드',
         linkto: 'frontend',
       },
       {
         id: 2,
-        category: '백엔드 개발',
+        category: '백엔드',
         linkto: 'backend',
       },
     ],

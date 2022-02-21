@@ -1,4 +1,4 @@
-export const LOCATION_DATA = {
+export const LOCATIONS = {
   한국: [
     {
       id: 1,

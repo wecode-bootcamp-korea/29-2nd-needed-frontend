@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { LOCATION_DATA } from '../LOCATION_DATA';
+import { LOCATIONS } from '../LOCATION_DATA';
 
 const LocationModalList = ({
   countryVal,
@@ -33,7 +33,7 @@ const LocationModalList = ({
         <ProvinceItem onClick={selectAll} active={provinceVal === '전국'}>
           전국
         </ProvinceItem>
-        {LOCATION_DATA[countryVal].map(province => (
+        {LOCATIONS[countryVal].map(province => (
           <ProvinceItem
             key={province.id}
             onClick={() => selectProvince(province.province)}
