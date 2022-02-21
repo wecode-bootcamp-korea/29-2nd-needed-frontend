@@ -1,10 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LocationModalHeader = ({ closeBtn, title }) => {
+const LocationModalHeader = ({
+  closeBtn,
+  title,
+  setSelectedFilters,
+  setCountryVal,
+}) => {
+  const handleReset = () => {
+    setCountryVal('전세계');
+    setSelectedFilters(['전세계']);
+  };
+
   return (
     <ModalHeader>
-      <Reset>
+      <Reset onClick={handleReset}>
         {title === '지역' && (
           <>
             <i className="fa-solid fa-rotate-right" />

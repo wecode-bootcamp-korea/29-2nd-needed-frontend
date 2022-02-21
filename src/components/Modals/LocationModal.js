@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LocationModalHeader from './LocationModalComponents/LocationModalHeader';
 import LocationModalSelectBox from './LocationModalComponents/LocationModalSelectBox';
 import LocationModalList from './LocationModalComponents/LocationModalList';
+import { COUNTRY_KR_TO_EN, LOCATION_KR_TO_EN } from './QUERY_EXCHANGE';
 
 const LocationModal = ({ isOpen, setIsOpen, countryVal, setCountryVal }) => {
   const [provinceVal, setProvinceVal] = useState('전국');
@@ -18,10 +19,39 @@ const LocationModal = ({ isOpen, setIsOpen, countryVal, setCountryVal }) => {
     }
   };
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const applyFilter = () => {
+    const newCountryQuery = `country=${COUNTRY_KR_TO_EN[countryVal]}`;
+
+    const newLocationQuery =
+      'location=' +
+      selectedFilters.map(filter => LOCATION_KR_TO_EN[filter]).join(',');
+
+    const prevSortQuery = location.search
+      .split('&')
+      .filter(x => x.includes('job_sort'))
+      .join('');
+
+    const newQuery =
+      countryVal === '전세계'
+        ? newCountryQuery + '&' + prevSortQuery
+        : newCountryQuery + '&' + prevSortQuery + '&' + newLocationQuery;
+
+    navigate('/' + location.pathname.slice(1) + '?' + newQuery);
+    setIsOpen(false);
+  };
+
   return (
     <Background isOpen={isOpen} onClick={handleModalClose}>
       <Modal ref={modal}>
-        <LocationModalHeader closeBtn={closeBtn} title="지역" />
+        <LocationModalHeader
+          closeBtn={closeBtn}
+          title="지역"
+          setSelectedFilters={setSelectedFilters}
+          setCountryVal={setCountryVal}
+        />
         <ModalBody>
           <LocationModalSelectBox
             countryVal={countryVal}
@@ -46,9 +76,7 @@ const LocationModal = ({ isOpen, setIsOpen, countryVal, setCountryVal }) => {
             <SelectionBubble key={index}>{selection}</SelectionBubble>
           ))}
         </Selections>
-        <Link to="/">
-          <ConfirmBtn>확인</ConfirmBtn>
-        </Link>
+        <ConfirmBtn onClick={applyFilter}>확인</ConfirmBtn>
       </Modal>
     </Background>
   );

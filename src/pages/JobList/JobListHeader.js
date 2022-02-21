@@ -1,25 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-const JobsListHeader = ({ data, category, subcategory }) => {
+const JobsListHeader = ({ currCategory, category, subcategory }) => {
+  const location = useLocation();
+  const query = location.search;
+
   return (
     <div>
       <Header>
-        <HeaderTitle>{data.title}</HeaderTitle>
+        <HeaderTitle>{currCategory.title}</HeaderTitle>
         <HeaderList>
           {category && (
             <HeaderItems active={!subcategory}>
-              <Link to={'/recruitments/' + category}>{data.title} 전체</Link>
+              <Link to={'/recruitments/' + category + query}>
+                {currCategory.title} 전체
+              </Link>
             </HeaderItems>
           )}
-          {data.categories.map(x => (
+          {currCategory.categories.map(x => (
             <HeaderItems key={x.id} active={x.linkto === subcategory}>
               <Link
                 to={
                   x.linkto !== subcategory && category
-                    ? '/recruitments/' + category + '/' + x.linkto
-                    : '/recruitments/' + x.linkto
+                    ? '/recruitments/' + category + '/' + x.linkto + query
+                    : '/recruitments/' + x.linkto + query
                 }
               >
                 {x.category}
@@ -33,6 +38,7 @@ const JobsListHeader = ({ data, category, subcategory }) => {
 };
 
 const Header = styled.header`
+  margin-top: 50px;
   color: ${({ theme }) => theme.fontBlack};
   border-bottom: 1px ${({ theme }) => theme.borderGray} solid;
 
@@ -63,6 +69,7 @@ const HeaderItems = styled.li`
   line-height: 2.69;
   color: ${props =>
     props.active ? props => props.theme.themePurple : 'inherit'};
+  pointer-events: ${props => props.active && 'none'};
 `;
 
 export default JobsListHeader;
