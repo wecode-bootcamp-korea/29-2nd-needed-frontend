@@ -2,18 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import Map from './Map';
 
-const JobDetailInfo = ({ duedate, address }) => {
+const JobDetailInfo = ({ deadline, address, country }) => {
   return (
     <ExtraSection>
       <ExtraSectionItem>
         <span className="header">마감일</span>
-        <span className="body">{duedate}</span>
+        <span className="body">{deadline}</span>
       </ExtraSectionItem>
       <ExtraSectionItem>
         <span className="header">근무지역</span>
         <span className="body">{address}</span>
       </ExtraSectionItem>
-      <Map address={address} />
+
+      {country === '한국' && <Map address={address} />}
     </ExtraSection>
   );
 };

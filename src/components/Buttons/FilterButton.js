@@ -24,10 +24,10 @@ const FilterButton = ({ label, setIsOpen }) => {
   };
 
   const getCountOfLocation = () => {
-    if (searchParam('location', location.search) !== null) {
-      const currLocationsArray = searchParam('location', location.search).split(
-        ','
-      );
+    const currParam = searchParam('location', location.search);
+
+    if (currParam !== null && currParam !== 'all') {
+      const currLocationsArray = currParam.split(',');
       return currLocationsArray.length;
     }
   };
@@ -37,7 +37,7 @@ const FilterButton = ({ label, setIsOpen }) => {
       <ButtonText>{label}</ButtonText>
       <ButtonText purple>{getCurrentCountry()}</ButtonText>
       <i className="fa-solid fa-caret-down" />
-      <CountBubble hidden={getCountOfLocation()}>
+      <CountBubble hidden={getCountOfLocation() !== undefined}>
         {getCountOfLocation()}
       </CountBubble>
     </Button>

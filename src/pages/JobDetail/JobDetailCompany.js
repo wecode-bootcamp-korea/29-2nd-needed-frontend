@@ -2,19 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const JobDetailCompany = ({
-  company,
-  company_category,
-  company_logo,
-  company_id,
-}) => {
+const JobDetailCompany = ({ company_name, company_logo, company_id }) => {
   return (
     <CompanyInfo>
       <Link to={'/company/' + company_id}>
         <LogoWrap src={company_logo} />
         <div>
-          <Company>{company}</Company>
-          <CompanyCategory>{company_category}</CompanyCategory>
+          <Company>{company_name}</Company>
         </div>
       </Link>
     </CompanyInfo>
@@ -57,10 +51,6 @@ const LogoWrap = styled.div`
 
 const Company = styled.h5`
   margin-bottom: 5px;
-`;
-
-const CompanyCategory = styled.h6`
-  color: #999;
 `;
 
 export default JobDetailCompany;

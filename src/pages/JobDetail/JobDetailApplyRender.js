@@ -5,9 +5,10 @@ import JobDetailApplicationForm from './JobDetailApplicationForm';
 const JobDetailApplyRender = ({
   isApplicationFormOpen,
   setIsApplicationFormOpen,
-  reward,
+  compensation,
   isShareOpen,
   handleShareModal,
+  resumes,
 }) => {
   if (isApplicationFormOpen) {
     return (
@@ -18,7 +19,7 @@ const JobDetailApplyRender = ({
   } else {
     return (
       <JobDetailApply
-        reward={reward}
+        compensation={compensation}
         setIsApplicationFormOpen={setIsApplicationFormOpen}
         isShareOpen={isShareOpen}
         handleShareModal={handleShareModal}

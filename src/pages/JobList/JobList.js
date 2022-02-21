@@ -37,7 +37,7 @@ const JobList = () => {
 
     const country =
       searchParam('country', location.search) !== 'all'
-        ? `country=${COUNTRY_EN_TO_KR[searchParam('country')]}`
+        ? `country=${COUNTRY_EN_TO_KR[searchParam('country', location.search)]}`
         : undefined;
 
     const sort =
