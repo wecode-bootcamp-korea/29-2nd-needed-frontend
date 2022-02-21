@@ -32,7 +32,7 @@ function Login() {
               alert('needed에 오신 걸 환영합니다!');
               navigate('/');
             } else {
-              alert('No');
+              alert('로그인에 실패했습니다.');
               navigate('/');
             }
           });
