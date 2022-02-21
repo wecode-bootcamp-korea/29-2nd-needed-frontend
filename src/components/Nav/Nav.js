@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SIDEBAR_INSIDE } from './SIDEBAR_INSIDE';
 import SideInside from './SideInside';
@@ -19,15 +20,25 @@ const Nav = () => {
             <NavBt onClick={ModalHandler}>
               <MenuImg src="images/nav/menu.png" alt="menu" />
             </NavBt>
-            <Logo src="/images/nav/needed.png" alt="log" />
+            <StyledLink to="/">
+              <Logo src="/images/nav/needed.png" alt="log" />
+            </StyledLink>
           </NavLeft>
           <TextBox>
-            <Menu>채용</Menu>
+            <Menu>
+              <StyledLink to="/recruitments">채용</StyledLink>
+            </Menu>
             <Menu>이벤트</Menu>
-            <Menu>직군별 연봉</Menu>
-            <Menu>이력서</Menu>
+            <Menu>
+              <StyledLink to="/salary">직군별 연봉</StyledLink>
+            </Menu>
+            <Menu>
+              <StyledLink to="/resume">이력서</StyledLink>
+            </Menu>
             <Menu>커뮤니티</Menu>
-            <Menu>프리랜서</Menu>
+            <Menu>
+              <StyledLink to="/salary">needed +</StyledLink>
+            </Menu>
             <Menu>AI 합격예측</Menu>
           </TextBox>
           <NavRight>
@@ -129,6 +140,11 @@ const Menu = styled.li`
   }
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #333333;
+`;
+
 const NavRight = styled.div`
   display: flex;
   flex-direction: row;
@@ -141,6 +157,7 @@ const SearchWrap = styled.button`
   padding: 5px;
   cursor: pointer;
 `;
+
 const Search = styled.img`
   width: 18px;
   height: 18px;
