@@ -150,6 +150,7 @@ const NavRight = styled.div`
   flex-direction: row;
   padding: 10px 0px;
 `;
+
 const SearchWrap = styled.button`
   height: 100%;
   background-color: white;
