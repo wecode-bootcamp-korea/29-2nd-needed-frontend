@@ -51,9 +51,9 @@ const Nav = () => {
         </NavContainer>
       </Navigation>
       <SlideWrap
-        displayShow={displayShow}
-        onMouseOver={() => setDisplayShow(true)}
-        onMouseOut={() => setDisplayShow(false)}
+        modalOpen={modalOpen}
+        onMouseOver={() => setModalOpen(true)}
+        onMouseOut={() => setModalOpen(false)}
       >
         <SlideBox>
           {SIDEBAR_INSIDE.map(list => {
@@ -180,8 +180,8 @@ const SlideWrap = styled.div`
   position: absolute;
   top: 50px;
   width: 100%;
-  height: 100%;
-  display: ${props => (props.displayShow ? 'display' : 'none')};
+  height: 50%;
+  display: ${props => (props.modalOpen ? 'display' : 'none')};
 `;
 
 const SlideBox = styled.div`
