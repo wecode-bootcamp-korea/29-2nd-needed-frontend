@@ -66,15 +66,16 @@ const Company = styled.h2`
   font-weight: 500;
 `;
 
-const HighResponseBadge = styled.span`
-  display: inline-block;
-  margin-bottom: 10px;
-  padding: 4px;
-  border: 1px ${({ theme }) => theme.themePink} solid;
-  border-radius: 2px;
-  color: ${({ theme }) => theme.themePink};
-  font-size: 10px;
-`;
+// TODO: 응답률은 추가구현
+// const HighResponseBadge = styled.span`
+//   display: inline-block;
+//   margin-bottom: 10px;
+//   padding: 4px;
+//   border: 1px ${({ theme }) => theme.themePink} solid;
+//   border-radius: 2px;
+//   color: ${({ theme }) => theme.themePink};
+//   font-size: 10px;
+// `;
 
 const Location = styled.aside`
   margin-bottom: 10px;

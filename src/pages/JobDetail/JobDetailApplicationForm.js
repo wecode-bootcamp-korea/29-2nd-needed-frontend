@@ -1,43 +1,116 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { api } from '../../api/config';
 
 const JobDetailApplicationForm = ({ setIsApplicationFormOpen }) => {
+  const params = useParams();
+
   const [information, setInformation] = useState({
     name: '',
     email: '',
     phone: '',
   });
 
-  const [uploadedFile, setUploadedFile] = useState('');
+  const [fetchedUserInfo, setFetchedUserInfo] = useState({
+    name: '',
+    email: '',
+    phone: '',
+  });
+
+  const [resumes, setResumes] = useState({});
+  const [selectedFile, setSelectedFile] = useState([]);
+
+  // initial 세팅하는 useEffect
+  useEffect(() => {
+    const initialInformation = {
+      name: fetchedUserInfo.name || '',
+      email: fetchedUserInfo.email || '',
+      phone: fetchedUserInfo.phone_number || '',
+    };
+
+    setInformation(initialInformation);
+  }, [
+    fetchedUserInfo.name,
+    fetchedUserInfo.email,
+    fetchedUserInfo.phone_number,
+  ]);
+
+  // 개인 정보 가져오는 useEffect
+  useEffect(() => {
+    const token = sessionStorage.getItem('Authorization');
+
+    axios
+      .get(api.fetchProfile, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(res => {
+        setFetchedUserInfo(res.data.result);
+      });
+  }, []);
+
+  // Resume들 불러오는 useEffect
+  useEffect(() => {
+    const token = sessionStorage.getItem('Authorization');
+
+    axios
+      .get(api.fetchResume, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(res => {
+        setResumes(res.data.results);
+      });
+  }, []);
 
   const handleInputChange = e => {
     setInformation({ ...information, [e.target.name]: e.target.value });
   };
 
-  const handleFileUpload = e => {
-    setUploadedFile(e.target.files[0]);
+  const selectFileToUpload = e => {
+    if (!selectedFile.includes(e.target.getAttribute('name'))) {
+      setSelectedFile(prev => [...prev, e.target.getAttribute('name')]);
+    } else {
+      setSelectedFile(prev =>
+        prev.filter(id => id !== e.target.getAttribute('name'))
+      );
+    }
   };
 
   const verifyAllFields = () => {
     return !!(
-      uploadedFile &&
       information.name &&
       information.email &&
-      information.phone
+      information.phone &&
+      selectedFile.length !== 0
     );
   };
 
   const submitApplication = () => {
-    if (verifyAllFields()) {
-      alert('지원 완료!');
-      setInformation({
-        name: '',
-        email: '',
-        phone: '',
-      });
-      setUploadedFile('');
-      setIsApplicationFormOpen(false);
+    if (verifyAllFields) {
+      axios
+        .post(
+          `${api.fetchApplication}/${params.id}`,
+          { resume_id: selectedFile.map(x => Number(x)) },
+          {
+            headers: { Authorization: sessionStorage.getItem('Authorization') },
+          }
+        )
+        .then(res => {
+          if (res.data.message === 'SUCCESS') {
+            alert('지원 완료!');
+          } else {
+            alert('이미 지원한 공고입니다.');
+          }
+        });
     }
+
+    setSelectedFile([]);
+    setIsApplicationFormOpen(false);
   };
 
   return (
@@ -84,11 +157,30 @@ const JobDetailApplicationForm = ({ setIsApplicationFormOpen }) => {
 
       <FileUpload>
         <H2Titles>첨부파일</H2Titles>
-        <button>
-          <span>{uploadedFile ? uploadedFile.name : '파일 업로드'}</span>
+        {resumes.length > 0 ? (
+          resumes.map((file, index) => (
+            <File
+              name={file.id}
+              key={index}
+              onClick={selectFileToUpload}
+              selected={selectedFile.includes(`${file.id}`)}
+            >
+              <i className="fa-regular fa-file" />
+              {file.name}
+            </File>
+          ))
+        ) : (
+          <SideDesc>
+            업로드하신 이력서가 없습니다! <br /> 이력서 탭으로 이동하신 후
+            업로드를 해주세요
+          </SideDesc>
+        )}
+        {/* TODO: 파일 업로드는 추가구현입니다. */}
+        {/* <button>
+          <span>파일 업로드</span>
           <UploadInput onChange={handleFileUpload} />
-        </button>
-        <SideDesc>하나의 파일만 업로드할 수 있습니다.</SideDesc>
+        </button> */}
+        <SideDesc>모든 필드를 입력해주시고, 파일을 선택해주세요.</SideDesc>
       </FileUpload>
 
       <ApplicationFooter>
@@ -139,6 +231,22 @@ const H2Titles = styled.h2`
   font-size: 16px;
   font-weight: 500;
   border-left: 2px solid ${({ theme }) => theme.themePurple};
+`;
+
+const File = styled.div`
+  width: 100%;
+  border: 1px solid ${({ theme }) => theme.borderGray};
+  border-radius: 3px;
+  margin-bottom: 12px;
+  padding: 16px;
+  text-align: center;
+  ${({ selected, theme }) =>
+    selected &&
+    `border: 1px solid ${theme.themePurple}; background-color: #F6F3FF;`}
+
+  i {
+    margin-right: 8px;
+  }
 `;
 
 const InformationForm = styled.div`
@@ -198,14 +306,16 @@ const SideDesc = styled.aside`
   font-size: 12px;
   color: #999;
   text-align: center;
+  line-height: 1.4;
 `;
 
-const UploadInput = styled.input.attrs(props => ({
-  type: 'file',
-}))`
-  height: 100%;
-  opacity: 0;
-`;
+// TODO : 파일 업로드는 추가구현입니다
+// const UploadInput = styled.input.attrs(props => ({
+//   type: 'file',
+// }))`
+//   height: 100%;
+//   opacity: 0;
+// `;
 
 const ApplicationFooter = styled.div`
   padding: 20px;
