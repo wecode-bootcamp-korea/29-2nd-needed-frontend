@@ -39,8 +39,12 @@ const Nav = () => {
           </NavRight>
         </NavContainer>
       </Navigation>
-      <SlideWrap>
-        <SlideBox displayShow={ModalHandler}>
+      <SlideWrap
+        displayShow={displayShow}
+        onMouseOver={() => setDisplayShow(true)}
+        onMouseOut={() => setDisplayShow(false)}
+      >
+        <SlideBox>
           {SIDEBAR_INSIDE.map(list => {
             return (
               <SideInside
@@ -159,6 +163,7 @@ const SlideWrap = styled.div`
   top: 50px;
   width: 100%;
   height: 100%;
+  display: ${props => (props.displayShow ? 'display' : 'none')};
 `;
 
 const SlideBox = styled.div`
@@ -168,7 +173,6 @@ const SlideBox = styled.div`
   left: 160px;
   background-color: white;
   border: 1px solid #e1e2e3;
-  display: ${props => (props.displayShow ? 'display' : 'none')};
 `;
 
 export default Nav;
