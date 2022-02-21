@@ -11,11 +11,11 @@ export const SIDEBAR_INSIDE = [
     subNav: [
       {
         title: '프론트엔드',
-        url: '/recruitments/programing/frontend',
+        url: '/recruitments/programming/frontend',
       },
       {
         title: '백엔드',
-        url: '/recruitments/programing/backend',
+        url: '/recruitments/programming/backend',
       },
     ],
   },
