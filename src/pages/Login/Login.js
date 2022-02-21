@@ -117,6 +117,7 @@ const ModalTop = styled.div`
   width: 385px;
   height: 54px;
 `;
+
 const Logo = styled.img`
   display: flex;
   justify-content: center;
@@ -124,6 +125,7 @@ const Logo = styled.img`
   width: 70px;
   height: 16px;
 `;
+
 const ModalOffBt = styled.button`
   display: flex;
   justify-content: center;
@@ -133,23 +135,27 @@ const ModalOffBt = styled.button`
   height: 24px;
   cursor: pointer;
 `;
+
 const ModalOut = styled.img`
   display: flex;
   width: 15px;
   height: 15px;
   justify-content: end;
 `;
+
 const ModalBody = styled.div`
   width: 385px;
   height: 626px;
   padding: 20px;
 `;
+
 const Title = styled.div`
   font-size: 26px;
   font-weight: 600;
   text-align: center;
   line-height: 1.54;
 `;
+
 const Descript = styled.div`
   margin-top: 16px;
   line-height: 1.5;
@@ -220,4 +226,5 @@ const HandleModar = styled.button`
   font-size: 14px;
   cursor: pointer;
 `;
+
 export default Login;
