@@ -14,10 +14,20 @@ function Login() {
 
   const navigate = useNavigate();
 
+  const isLogin = () => {
+    if (!sessionStorage.getItem('token')) {
+      navigate('/login');
+    } else {
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+      document.location.href = 'main';
+    }
+  };
+
   const kakaoLoginClickHandler = () => {
     Kakao.Auth.loginForm({
       success: function (authObj) {
-        fetch('http://10.58.7.168:8000/users/signin/kakao/callback', {
+        fetch('http://15.165.203.121:8080/users/signin/kakao/callback', {
           method: 'GET',
           headers: {
             'access-token': authObj.access_token,
@@ -26,7 +36,7 @@ function Login() {
           .then(res => res.json())
           .then(res => {
             if (!sessionStorage.token) {
-              sessionStorage.setItem('token', res.token);
+              sessionStorage.setItem('token', res.access_token);
             }
             if (res.message === 'SUCCESS') {
               alert('needed에 오신 걸 환영합니다!');
