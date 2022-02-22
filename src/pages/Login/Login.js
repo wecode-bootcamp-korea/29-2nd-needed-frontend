@@ -14,16 +14,6 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const isLogin = () => {
-    if (!sessionStorage.getItem('token')) {
-      navigate('/login');
-    } else {
-      localStorage.removeItem('token');
-      alert('로그아웃 되었습니다.');
-      document.location.href = 'main';
-    }
-  };
-
   const kakaoLoginClickHandler = () => {
     Kakao.Auth.loginForm({
       success: function (authObj) {
