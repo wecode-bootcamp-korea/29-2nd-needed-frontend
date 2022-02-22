@@ -59,12 +59,9 @@ function Login() {
     },
     success: function (response) {
       const thumbNail = response.properties.thumbnail_image;
-      console.log(thumbNail);
       setProfile(thumbNail);
     },
-    fail: function (error) {
-      console.log(error);
-    },
+    fail: function (error) {},
   });
 
   return (
