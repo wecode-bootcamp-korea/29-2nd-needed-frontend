@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import Modal from 'react-modal';
+const { Kakao } = window;
 
 function Login() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -114,8 +118,6 @@ function Login() {
   );
 }
 
-<<<<<<< HEAD
-=======
 const modalStyle = {
   overlay: {
     position: 'fixed',
@@ -263,5 +265,4 @@ const Profile = styled.img`
   border-radius: 60%;
 `;
 
->>>>>>> 4e1bb00 (add:logOut&profile)
 export default Login;
