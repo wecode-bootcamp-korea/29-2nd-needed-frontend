@@ -10,6 +10,8 @@ import Login from './pages/Login/Login';
 import Company from './pages/Company/Company';
 import Salary from './pages/Salary/Salary';
 import MyPage from './pages/MyPage/MyPage';
+import WantedPlusLanding from './pages/WantedPlus/WantedPlusLanding';
+import WantedPlusContents from './pages/WantedPlus/WantedPlusContents';
 
 const Router = () => {
   return (
@@ -29,6 +31,8 @@ const Router = () => {
         <Route path="/company" element={<Company />} />
         <Route path="/salary" element={<Salary />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/wantedPlus/landing" element={<WantedPlusLanding />} />
+        <Route path="/wantedPlus/contents" element={<WantedPlusContents />} />
       </Routes>
       <Footer />
     </BrowserRouter>
