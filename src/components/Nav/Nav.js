@@ -38,7 +38,7 @@ const Nav = () => {
             </Menu>
             <Menu>커뮤니티</Menu>
             <Menu>
-              <StyledLink to="/salary">needed +</StyledLink>
+              <StyledLink to="/neededPlus/landing">needed +</StyledLink>
             </Menu>
             <Menu>AI 합격예측</Menu>
           </TextBox>

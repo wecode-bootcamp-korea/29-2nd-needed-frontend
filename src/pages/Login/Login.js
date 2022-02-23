@@ -7,8 +7,12 @@ const { Kakao } = window;
 
 function Login() {
   const [modalOpen, setModalOpen] = useState(false);
-
+  const [signupOpen, setSignupOpen] = useState(false);
   const [profile, setProfile] = useState();
+
+  const handleSignup = () => {
+    setSignupOpen(prev => !prev);
+  };
 
   //modal
   const modalHandler = () => {
@@ -30,7 +34,7 @@ function Login() {
   const kakaoLoginClickHandler = () => {
     Kakao.Auth.loginForm({
       success: function (authObj) {
-        fetch('http://15.165.203.121:8080/users/signin/kakao/callback', {
+        fetch('http://10.58.7.168:8000/users/signin/kakao/callback', {
           method: 'GET',
           headers: {
             'access-token': authObj.access_token,
@@ -43,8 +47,12 @@ function Login() {
             }
             if (res.message === 'SUCCESS') {
               alert('needed에 오신 걸 환영합니다!');
+              console.log(res);
+              handleSignup();
+            }
+            if (res.message === 'NEED_SIGNUP') {
+              alert('회원가입이 필요합니다.');
             } else {
-              alert('로그인에 실패했습니다.');
               navigate('/');
             }
           });
@@ -111,7 +119,7 @@ function Login() {
               <SocailTitle>Google</SocailTitle>
             </SocialWrap>
           </SocialLog>
-          <SignUp />
+          <SignUp onClick={handleSignup} />
         </ModalBody>
       </Modal>
     </>

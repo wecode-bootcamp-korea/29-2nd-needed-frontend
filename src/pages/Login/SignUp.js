@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
+const { Kakao } = window;
 
 function Login() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [nickName, setnickName] = useState();
+  const [email, setEmail] = useState();
   const [signupIn, setSignupIn] = useState({
     nickName: '',
     phone: '',
@@ -13,7 +16,6 @@ function Login() {
   function handleChangeState({ target }) {
     const { name, value } = target;
     setSignupIn({ ...signupIn, [name]: value });
-    console.log(signupIn.phone);
   }
 
   const ModalHandler = () => {
@@ -22,7 +24,6 @@ function Login() {
 
   const signUpSubmit = () => {
     if (sessionStorage.Authorization) {
-      console.log(sessionStorage.Authorization);
       fetch('http://15.165.203.121:8080/users/profile', {
         method: 'POST',
         headers: {
@@ -43,10 +44,23 @@ function Login() {
     }
   };
 
+  Kakao.API.request({
+    url: '/v2/user/me',
+    data: {
+      property_keys: ['properties.nickname', 'kakao_account.email'],
+    },
+    success: function (response) {
+      const nickName = response.properties.nickname;
+      setnickName(nickName);
+      const email = response.kakao_account.email;
+      setEmail(email);
+    },
+    fail: function (error) {},
+  });
+
   return (
     <>
       <HandleSignUp onClick={ModalHandler} />
-
       <Modal
         isOpen={modalOpen}
         onRequestClose={ModalHandler}
@@ -64,7 +78,7 @@ function Login() {
         <ModalBody>
           <InputWrap>
             <TitleTag>이름</TitleTag>
-            <SignUpInput name="nickName" onChange={handleChangeState} />
+            <SignUpInput name="nickName" value={nickName} />
           </InputWrap>
           <InputWrap>
             <TitleTag>휴대폰 번호</TitleTag>
@@ -76,7 +90,7 @@ function Login() {
           </InputWrap>
           <InputWrap>
             <TitleTag>이메일</TitleTag>
-            <SignUpInput name="email" onChange={handleChangeState} />
+            <SignUpInput name="email" value={email} />
           </InputWrap>
         </ModalBody>
         <BtWrap>
@@ -190,7 +204,7 @@ const BtWrap = styled.div`
 
 const HandleSignUp = styled.button`
   border: none;
-  background-color: red;
+  background-color: transparent;
   cursor: pointer;
 `;
 
