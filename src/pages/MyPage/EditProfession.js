@@ -1,31 +1,51 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { CATEGORY } from './PROFESSION_CATEGORY';
+import { SUBCATEGORY_ID, CAREER_ID, CAREER_ID_TO_STR } from './MYPAGE_IDS';
 
-const EditProfession = ({ setIsProfessionEdit }) => {
-  const [selectedOptions, setSelectedOptions] = useState({
-    category: '',
-    subcategory: '',
-    years: '',
-    salary: '',
-  });
+const EditProfession = ({ info, setIsProfessionEdit, token, setIsUpdated }) => {
+  const initialSelectedOptions = {
+    category: info.job_category || '',
+    subcategory: info.job_subcategory || '',
+    years: CAREER_ID_TO_STR[info.career] || '',
+    salary: info.salary || '',
+  };
+
+  const [selectedOptions, setSelectedOptions] = useState(
+    initialSelectedOptions
+  );
 
   const handleSelectBoxChange = e => {
     setSelectedOptions({ ...selectedOptions, [e.target.name]: e.target.value });
   };
 
-  // TODO : POST 명령 들어와야함
-  const clickSaveBtn = () => {
-    fetch('API 주소 넣어야함', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization:
-          sessionStorage.getItem('세션스토리지에 저장될 토큰 이름!'),
-      },
-      // FIXME 여러 계정에 대한 정보가 담긴 객체에서 profession 부분만 업데이트 되어야하는데...
-      body: JSON.stringify(selectedOptions),
-    });
+  const updateProfessionInfo = () => {
+    if (selectedOptions.subcategory === '') {
+      return alert('직무를 선택해주세요!');
+    }
+
+    const headers = {
+      Authorization: token,
+    };
+
+    const body = {
+      ...info,
+      occupation: SUBCATEGORY_ID[selectedOptions.subcategory],
+      career: CAREER_ID[selectedOptions.years],
+      salary: selectedOptions.salary,
+    };
+
+    axios
+      .post('http://15.165.203.121:8080/users/profile', body, {
+        headers,
+      })
+      .then(({ status }) => {
+        if (status === 204) alert('고객님의 정보가 업데이트 되었습니다✨');
+      });
+
+    setIsUpdated(prev => prev + 1);
+    setIsProfessionEdit(false);
   };
 
   const clickCancelBtn = () => {
@@ -67,6 +87,7 @@ const EditProfession = ({ setIsProfessionEdit }) => {
               onChange={handleSelectBoxChange}
               name="subcategory"
             >
+              <SelectOption> </SelectOption>
               {selectedOptions.category !== '' &&
                 CATEGORY.filter(
                   category => category.category === selectedOptions.category
@@ -114,7 +135,7 @@ const EditProfession = ({ setIsProfessionEdit }) => {
         </Item>
       </ProfessionInfo>
       <ButtonWrap>
-        <Button onClick={clickSaveBtn}>저장</Button>
+        <Button onClick={updateProfessionInfo}>저장</Button>
         <Button onClick={clickCancelBtn}>취소</Button>
       </ButtonWrap>
     </Profession>
@@ -185,16 +206,18 @@ const SelectBoxWrap = styled.div`
 const SelectBox = styled.select`
   width: 100%;
   height: 52px;
-  padding: 18px 0 18px 18px;
+  padding: 15px 0 18px 18px;
   background-color: #f8f8fa;
   border: none;
   appearance: none;
+  font-size: 14px;
 `;
 
 const InputBox = styled.input`
   width: 100%;
   height: 52px;
-  padding: 18px 0 18px 18px;
+  padding: 15px 0 18px 18px;
+  font-size: 14px;
   background-color: #f8f8fa;
   border: none;
   appearance: none;

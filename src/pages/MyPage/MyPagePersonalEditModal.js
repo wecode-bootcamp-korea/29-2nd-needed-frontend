@@ -1,11 +1,29 @@
-import React, { useRef, useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { SUBCATEGORY_ID } from './MYPAGE_IDS';
 
-const MyPagePersonalEditModal = ({ info, changeInfo, setChangeInfo }) => {
+const MyPagePersonalEditModal = ({
+  info,
+  changeInfo,
+  setChangeInfo,
+  token,
+  setIsUpdated,
+}) => {
   const modal = useRef();
   const closeBtn = useRef();
 
   const [newInfo, setNewInfo] = useState({ name: '', email: '', tel: '' });
+
+  useEffect(() => {
+    const initial = {
+      name: info.name || '',
+      email: info.email || '',
+      tel: info.phone_number || '',
+    };
+
+    setNewInfo(initial);
+  }, [info.name, info.email, info.phone_number]);
 
   const handleInputChange = e => {
     setNewInfo({ ...newInfo, [e.target.name]: e.target.value });
@@ -13,12 +31,30 @@ const MyPagePersonalEditModal = ({ info, changeInfo, setChangeInfo }) => {
 
   const handleModalClose = e => {
     if (!modal.current.contains(e.target) || e.target === closeBtn.current) {
-      setNewInfo({ name: '', email: '', tel: '' });
       setChangeInfo(false);
     }
   };
 
   const updatePersonalInfo = () => {
+    const headers = {
+      Authorization: token,
+    };
+
+    const body = {
+      ...info,
+      phone_number: newInfo.tel,
+      occupation: SUBCATEGORY_ID[info.job_subcategory],
+    };
+
+    axios
+      .post('http://15.165.203.121:8080/users/profile', body, {
+        headers: headers,
+      })
+      .then(({ status }) => {
+        if (status === 204) alert('고객님의 정보가 업데이트 되었습니다✨');
+      });
+
+    setIsUpdated(prev => prev + 1);
     setChangeInfo(false);
   };
 
@@ -27,8 +63,7 @@ const MyPagePersonalEditModal = ({ info, changeInfo, setChangeInfo }) => {
       <EditInfoModal ref={modal}>
         <EditInfoHeading>기본정보 수정</EditInfoHeading>
         <EditInfoSubHeading>
-          지원 결과 또는 추천 포지션 정보를 받아볼 이메일/연락처 정보
-          입력해주세요.
+          지원 결과 또는 추천 포지션 정보를 받아볼 연락처 정보를 입력해주세요.
         </EditInfoSubHeading>
         <EditInfoInputWrap>
           <EditInfoItem>
@@ -37,6 +72,7 @@ const MyPagePersonalEditModal = ({ info, changeInfo, setChangeInfo }) => {
               name="name"
               value={newInfo.name}
               onChange={handleInputChange}
+              disabled
             />
           </EditInfoItem>
           <EditInfoItem>
@@ -46,6 +82,7 @@ const MyPagePersonalEditModal = ({ info, changeInfo, setChangeInfo }) => {
               type="email"
               value={newInfo.email}
               onChange={handleInputChange}
+              disabled
             />
           </EditInfoItem>
           <EditInfoItem>
