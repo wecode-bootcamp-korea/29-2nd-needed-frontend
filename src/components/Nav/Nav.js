@@ -47,7 +47,6 @@ const Nav = () => {
               <Search src="/images/nav/search.png" alt="search" />
             </SearchWrap>
             <LogIn />
-
             <RoundBt>기업서비스</RoundBt>
           </NavRight>
         </NavContainer>

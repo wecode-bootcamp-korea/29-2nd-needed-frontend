@@ -9,11 +9,6 @@ function Login() {
   const [modalOpen, setModalOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
   const [profile, setProfile] = useState();
-
-  const handleSignup = () => {
-    setSignupOpen(prev => !prev);
-  };
-
   //modal
   const modalHandler = () => {
     setModalOpen(prev => !prev);
@@ -34,7 +29,7 @@ function Login() {
   const kakaoLoginClickHandler = () => {
     Kakao.Auth.loginForm({
       success: function (authObj) {
-        fetch('http://10.58.7.168:8000/users/signin/kakao/callback', {
+        fetch('http://15.165.203.121:8080/users/signin/kakao/callback', {
           method: 'GET',
           headers: {
             'access-token': authObj.access_token,
@@ -47,8 +42,6 @@ function Login() {
             }
             if (res.message === 'SUCCESS') {
               alert('needed에 오신 걸 환영합니다!');
-              console.log(res);
-              handleSignup();
             }
             if (res.message === 'NEED_SIGNUP') {
               alert('회원가입이 필요합니다.');
@@ -74,7 +67,6 @@ function Login() {
     },
     fail: function (error) {},
   });
-
   return (
     <>
       <HandleModar onClick={logOutHandler}>
@@ -119,7 +111,9 @@ function Login() {
               <SocailTitle>Google</SocailTitle>
             </SocialWrap>
           </SocialLog>
-          <SignUp onClick={handleSignup} />
+          <SignUpWrap>
+            <StyledSignUp />
+          </SignUpWrap>
         </ModalBody>
       </Modal>
     </>
@@ -272,6 +266,19 @@ const Profile = styled.img`
   width: 28px;
   height: 28px;
   border-radius: 60%;
+`;
+
+const SignUpWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+`;
+
+const StyledSignUp = styled(SignUp)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default Login;

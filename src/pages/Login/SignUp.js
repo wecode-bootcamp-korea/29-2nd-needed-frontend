@@ -60,7 +60,7 @@ function Login() {
 
   return (
     <>
-      <HandleSignUp onClick={ModalHandler} />
+      <HandleSignUp onClick={ModalHandler}>회원가입</HandleSignUp>
       <Modal
         isOpen={modalOpen}
         onRequestClose={ModalHandler}
@@ -203,9 +203,22 @@ const BtWrap = styled.div`
 `;
 
 const HandleSignUp = styled.button`
-  border: none;
-  background-color: transparent;
+  border: 1px solid #e1e2e3;
+  background-color: white;
+  border-radius: 15px;
+  padding: 0 10px;
+  margin-left: 15px;
+  font-weight: 400;
+  height: 40px;
+  width: 100%;
+  font-size: 13px;
+  color: #666;
   cursor: pointer;
+  &:hover {
+    background-color: #62d9ff;
+    font-weight: 900;
+    color: white;
+  }
 `;
 
 export default Login;
