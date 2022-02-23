@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import Card from './Card';
 
 function CompanyInfo({ companyData }) {
-  const { jobListings, companyDesc, companyPhoto } = companyData;
+  const { recruitments, description, images } = companyData;
 
-  const joinedDesc = companyDesc?.join(' ');
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -14,22 +13,22 @@ function CompanyInfo({ companyData }) {
         <InfoSection>
           <Heading3>채용 중인 포지션</Heading3>
           <CardWrap>
-            {jobListings?.map(data => (
-              <Card key={data.id} data={data} />
+            {recruitments?.map(recruitInfo => (
+              <Card key={recruitInfo.id} data={recruitInfo} />
             ))}
           </CardWrap>
         </InfoSection>
         <InfoSection>
           <Heading3>회사 소개</Heading3>
           <PictureWrap>
-            {companyPhoto?.map((data, idx) => (
+            {images?.map((imageEle, idx) => (
               <SeparatePictureContainer key={idx}>
-                <img alt="company photos" src={data} />
+                <img alt="company photos" src={imageEle.image} />
               </SeparatePictureContainer>
             ))}
           </PictureWrap>
           <CompanyIntro height={toggle}>
-            <div>{joinedDesc}</div>
+            <CompanyDesc>{description}</CompanyDesc>
           </CompanyIntro>
           <ShowMore
             onClick={() => {
@@ -62,6 +61,7 @@ const Heading3 = styled.div`
 const CardWrap = styled.div`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
 `;
 
 const PictureWrap = styled.div`
@@ -89,6 +89,11 @@ const CompanyIntro = styled.div`
   line-height: 27px;
   color: ${({ theme }) => theme.fontBlack};
   white-space: pre-wrap;
+`;
+
+const CompanyDesc = styled.div`
+  white-space: pre-line;
+  word-break: keep-all;
 `;
 
 const ShowMore = styled.div`

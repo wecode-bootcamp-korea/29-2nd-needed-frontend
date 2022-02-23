@@ -19,11 +19,11 @@ function Footer() {
                 <Links>고객센터</Links>
               </Wrap>
               <MarketingChannels>
-                <i class="fab fa-instagram" />
-                <i class="fab fa-youtube" />
-                <i class="fab fa-facebook" />
-                <i class="fab fa-apple" />
-                <i class="fab fa-google-play" />
+                <i className="fab fa-instagram" />
+                <i className="fab fa-youtube" />
+                <i className="fab fa-facebook" />
+                <i className="fab fa-apple" />
+                <i className="fab fa-google-play" />
               </MarketingChannels>
             </LinkBunchDiv>
             <TinyLetterSelectLangDiv between>

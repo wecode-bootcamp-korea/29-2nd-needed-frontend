@@ -28,11 +28,11 @@ const Router = () => {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/recruitment/:id" element={<JobDetail />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/company" element={<Company />} />
+        <Route path="/company/:id" element={<Company />} />
         <Route path="/salary" element={<Salary />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/wantedPlus/landing" element={<WantedPlusLanding />} />
-        <Route path="/wantedPlus/contents" element={<WantedPlusContents />} />
+        <Route path="/neededPlus/landing" element={<WantedPlusLanding />} />
+        <Route path="/neededPlus/contents" element={<WantedPlusContents />} />
       </Routes>
       <Footer />
     </BrowserRouter>

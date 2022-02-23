@@ -24,8 +24,17 @@ function GraphComponent({ data, selectedYear }) {
           <CartesianGrid stroke="rgba(51,51,51,0.2)" />
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip cursor={false} itemStyle={{ color: '#333', fontSize: 14 }} />
-          {/* <Bar dataKey="연봉" fill="rgba(51,51,51,0.2)" /> */}
+          <Tooltip
+            contentStyle={{
+              borderRadius: 5,
+              backgroundColor: 'rgba(0, 0, 0, 0.4)',
+              border: 0,
+              padding: 6,
+            }}
+            cursor={false}
+            labelStyle={{ color: '#fff' }}
+            itemStyle={{ color: '#fff', fontSize: 14 }}
+          />
           <Bar dataKey="연봉" barSize={20}>
             {data.map((entry, idx) => (
               <Cell
