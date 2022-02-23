@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from 'react-modal';
+import SignUp from './SignUp';
 const { Kakao } = window;
 
 function Login() {
   const [modalOpen, setModalOpen] = useState(false);
+
   const [profile, setProfile] = useState();
 
   //modal
@@ -16,14 +18,13 @@ function Login() {
   //token
   const logOutHandler = () => {
     setModalOpen(prev => !prev);
-    if (sessionStorage.getItem('token')) {
-      sessionStorage.removeItem('token');
+    if (sessionStorage.getItem('Authorization')) {
+      sessionStorage.removeItem('Authorization');
       alert('로그아웃 되었습니다.');
       navigate('/');
       return modalHandler();
     }
   };
-
   const navigate = useNavigate();
 
   const kakaoLoginClickHandler = () => {
@@ -38,12 +39,10 @@ function Login() {
           .then(res => res.json())
           .then(res => {
             if (!sessionStorage.token) {
-              sessionStorage.setItem('token', res.access_token);
+              sessionStorage.setItem('Authorization', res.access_token);
             }
             if (res.message === 'SUCCESS') {
               alert('needed에 오신 걸 환영합니다!');
-              navigate('/');
-              modalHandler();
             } else {
               alert('로그인에 실패했습니다.');
               navigate('/');
@@ -71,7 +70,7 @@ function Login() {
   return (
     <>
       <HandleModar onClick={logOutHandler}>
-        {!sessionStorage.getItem('token') ? (
+        {!sessionStorage.getItem('Authorization') ? (
           '로그인'
         ) : (
           <Profile src={profile} alt="profile" />
@@ -112,6 +111,7 @@ function Login() {
               <SocailTitle>Google</SocailTitle>
             </SocialWrap>
           </SocialLog>
+          <SignUp />
         </ModalBody>
       </Modal>
     </>
@@ -129,10 +129,11 @@ const modalStyle = {
     zIndex: 10,
   },
   content: {
+    position: 'fixed',
     display: 'flex',
-    position: 'absolute',
-    top: 100,
-    left: 500,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'white',

@@ -4,13 +4,48 @@ import Modal from 'react-modal';
 
 function Login() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [signupIn, setSignupIn] = useState({
+    nickName: '',
+    phone: '',
+    email: '',
+  });
+
+  function handleChangeState({ target }) {
+    const { name, value } = target;
+    setSignupIn({ ...signupIn, [name]: value });
+    console.log(signupIn.phone);
+  }
 
   const ModalHandler = () => {
     setModalOpen(prev => !prev);
   };
+
+  const signUpSubmit = () => {
+    if (sessionStorage.Authorization) {
+      console.log(sessionStorage.Authorization);
+      fetch('http://15.165.203.121:8080/users/profile', {
+        method: 'POST',
+        headers: {
+          Authorization: sessionStorage.getItem('Authorization'),
+        },
+        body: JSON.stringify({
+          phone_number: signupIn.phone,
+        }),
+      })
+        .then(response => response.json())
+        .then(result =>
+          result.message === 'SUCCESS'
+            ? alert('회원가입성공')
+            : console.info('결과: ', result)
+        );
+    } else if (!sessionStorage.Authorization) {
+      alert('카카오로그인을 해주세요');
+    }
+  };
+
   return (
     <>
-      <button onClick={ModalHandler} />
+      <HandleSignUp onClick={ModalHandler} />
 
       <Modal
         isOpen={modalOpen}
@@ -29,19 +64,23 @@ function Login() {
         <ModalBody>
           <InputWrap>
             <TitleTag>이름</TitleTag>
-            <SignUpInput />
+            <SignUpInput name="nickName" onChange={handleChangeState} />
           </InputWrap>
           <InputWrap>
             <TitleTag>휴대폰 번호</TitleTag>
-            <SignUpInput placeholder="핸드폰번호를 입력해 주세요." />
+            <SignUpInput
+              name="phone"
+              placeholder="핸드폰번호를 입력해 주세요."
+              onChange={handleChangeState}
+            />
           </InputWrap>
           <InputWrap>
             <TitleTag>이메일</TitleTag>
-            <SignUpInput />
+            <SignUpInput name="email" onChange={handleChangeState} />
           </InputWrap>
         </ModalBody>
         <BtWrap>
-          <SignUpBt>완료</SignUpBt>
+          <SignUpBt onClick={signUpSubmit}>완료</SignUpBt>
         </BtWrap>
       </Modal>
     </>
@@ -58,11 +97,13 @@ const modalStyle = {
     backgroundColor: 'rgba(230, 230, 230, 0.45)',
     zIndex: 10,
   },
+
   content: {
+    positions: 'fixed',
     display: 'flex',
-    position: 'absolute',
-    top: 100,
-    left: 500,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'white',
@@ -131,10 +172,10 @@ const TitleTag = styled.label`
 `;
 
 const SignUpBt = styled.button`
-  background-color: #f2f4f7;
+  background-color: #62d9ff;
   border-color: transparent;
-  color: #cacaca;
-  cursor: not-allowed;
+  color: white;
+  cursor: pointer;
   width: 100%;
   height: 54px;
   border-radius: 27px;
@@ -146,4 +187,11 @@ const BtWrap = styled.div`
   height: 70px;
   width: 100%;
 `;
+
+const HandleSignUp = styled.button`
+  border: none;
+  background-color: red;
+  cursor: pointer;
+`;
+
 export default Login;
