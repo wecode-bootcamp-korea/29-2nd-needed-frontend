@@ -21,7 +21,7 @@ function Login() {
 
   //token
   const logOutHandler = () => {
-    setModalOpen(prev => !prev);
+    modalHandler();
     if (sessionStorage.getItem('Authorization')) {
       sessionStorage.removeItem('Authorization');
       alert('로그아웃 되었습니다.');
