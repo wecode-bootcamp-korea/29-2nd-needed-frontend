@@ -7,7 +7,6 @@ const { Kakao } = window;
 
 function Login() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [signupOpen, setSignupOpen] = useState(false);
   const [profile, setProfile] = useState();
   //modal
   const modalHandler = () => {
@@ -45,9 +44,7 @@ function Login() {
             }
             if (res.message === 'NEED_SIGNUP') {
               alert('회원가입이 필요합니다.');
-            } else {
-              navigate('/');
-            }
+            } else navigate('/');
           });
       },
       fail: function (err) {

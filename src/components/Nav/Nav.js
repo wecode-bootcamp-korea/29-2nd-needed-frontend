@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { SIDEBAR_INSIDE } from './SIDEBAR_INSIDE';
 import SideInside from './SideInside';
 import LogIn from '../../pages/Login/Login';
-import SignUp from '../../pages/Login/SignUp';
 
 const Nav = () => {
   const [modalOpen, setModalOpen] = useState(false);
