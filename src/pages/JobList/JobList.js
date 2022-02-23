@@ -13,6 +13,7 @@ import {
   LOCATION_EN_TO_KR,
 } from '../../components/Modals/QUERY_EXCHANGE';
 import { searchParam } from './searchParam';
+import { api } from '../../api/config';
 
 const JobList = () => {
   const params = useParams();
@@ -56,11 +57,9 @@ const JobList = () => {
       .filter(x => x !== undefined)
       .filter(x => !x.includes('undefined') && !x.includes('null'));
 
-    axios
-      .get(`http://15.165.203.121:8080/recruitments?${finalQuery.join('&')}`)
-      .then(res => {
-        setPositionsData(res.data.Recruitment);
-      });
+    axios.get(`${api.fetchRecruitments}?${finalQuery.join('&')}`).then(res => {
+      setPositionsData(res.data.Recruitment);
+    });
   }, [params.category, params.subcategory, location.search]);
 
   return (

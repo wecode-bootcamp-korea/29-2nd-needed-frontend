@@ -3,8 +3,8 @@ export const CATEGORY = [
     id: 1,
     category: '개발',
     subcategory: [
-      { id: 1, subcategory: '프론트엔드 개발' },
-      { id: 2, subcategory: '백엔드 개발' },
+      { id: 1, subcategory: '프론트엔드' },
+      { id: 2, subcategory: '백엔드' },
     ],
   },
   {
@@ -12,7 +12,7 @@ export const CATEGORY = [
     category: '디자인',
     subcategory: [
       { id: 1, subcategory: 'UI/UX 디자인' },
-      { id: 2, subcategory: '브랜딩' },
+      { id: 2, subcategory: 'CI/BI 디자인' },
     ],
   },
   {
@@ -27,7 +27,7 @@ export const CATEGORY = [
     id: 4,
     category: '금융',
     subcategory: [
-      { id: 1, subcategory: '재무회계 담당자' },
+      { id: 1, subcategory: '재무회계담당자' },
       { id: 2, subcategory: '자산관리사' },
     ],
   },

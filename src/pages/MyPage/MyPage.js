@@ -5,58 +5,49 @@ import MyPageApplication from './MyPageApplication';
 import MyPagePersonal from './MyPagePersonal';
 import MyPageProfession from './MyPageProfession';
 import EditProfession from './EditProfession';
+import { api } from '../../api/config';
 
-const MOCK_DATA = {
-  src: 'https://k.kakaocdn.net/dn/bsQORn/btrr161cMhd/CqyTrjC6QdjgEXWnWp0BY1/img_110x110.jpg',
-  userName: '윤남주',
-  email: 'southpoley@gmail.com',
-  tel: '010-1234-5678',
-  isSubscribed: true,
-  payday: 22,
-  application: [
-    { id: 1, label: '지원 완료', count: 2 },
-    { id: 2, label: '서류 통과', count: 0 },
-    { id: 3, label: '최종 합격', count: 0 },
-    { id: 4, label: '불합격', count: 18 },
-  ],
-  profession: {
-    category: '',
-    subcategory: '',
-    years: '',
-    salary: '',
-  },
-};
-
-function MyPage() {
-  // TODO : token으로 유저 정보 get할 예정
-  useEffect(() => {
-    let token = sessionStorage.getItem('token');
-    axios.get('http://15.165.203.121:8080/users/profile', {
-      headers: {
-        Authorization: token,
-      },
-    });
-    //     .then(res => console.log(res));
-  }, []);
-
+const MyPage = () => {
   const [isProfessionEdit, setIsProfessionEdit] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
+  const [isUpdated, setIsUpdated] = useState(0);
+
+  const token = sessionStorage.getItem('Authorization');
+
+  useEffect(() => {
+    axios
+      .get(api.fetchProfile, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(res => {
+        setUserInfo(res.data.result);
+      });
+  }, [token, isUpdated]);
 
   return (
     <BackgroundWrap>
       <My>
         <Heading>MY 니디드</Heading>
         <FlexRowWrap>
-          <MyPagePersonal info={MOCK_DATA} />
+          <MyPagePersonal
+            info={userInfo}
+            token={token}
+            setIsUpdated={setIsUpdated}
+          />
           <FlexColumnWrap>
-            <MyPageApplication info={MOCK_DATA} />
+            <MyPageApplication info={userInfo} />
             {isProfessionEdit ? (
               <EditProfession
-                info={MOCK_DATA}
+                info={userInfo}
                 setIsProfessionEdit={setIsProfessionEdit}
+                token={token}
+                setIsUpdated={setIsUpdated}
               />
             ) : (
               <MyPageProfession
-                info={MOCK_DATA}
+                info={userInfo}
                 setIsProfessionEdit={setIsProfessionEdit}
               />
             )}
@@ -65,7 +56,7 @@ function MyPage() {
       </My>
     </BackgroundWrap>
   );
-}
+};
 
 const BackgroundWrap = styled.div`
   padding: 90px 0;

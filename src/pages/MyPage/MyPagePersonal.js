@@ -3,48 +3,56 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import MyPagePersonalEditModal from './MyPagePersonalEditModal';
 
-const MyPagePersonal = ({ info }) => {
+const MyPagePersonal = ({ info, token, setIsUpdated }) => {
   const navigate = useNavigate();
 
   const [changeInfo, setChangeInfo] = useState(false);
 
   const goToWantedPlus = () => {
-    navigate('/wantedplus');
+    if (info.is_subscription) {
+      navigate('/neededPlus/contents');
+    } else {
+      navigate('/neededPlus/landing');
+    }
   };
 
-  const getNextPayday = payday => {
+  const getNextPayday = subscriptionDate => {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
 
-    if (day < payday) {
-      return `${year}년 ${month}월 ${payday}일`;
-    } else if (day === payday) {
+    const dayOfSubscriptionDate = Number(subscriptionDate.slice(8, 10));
+
+    if (day < dayOfSubscriptionDate) {
+      return `${year}년 ${month}월 ${dayOfSubscriptionDate}일`;
+    } else if (day === dayOfSubscriptionDate) {
       return '오늘 🥳';
     } else {
-      return `${year}년 ${month + 1}월 ${payday}일`;
+      return `${year}년 ${month + 1}월 ${dayOfSubscriptionDate}일`;
     }
   };
 
   return (
     <Personal>
       <Info onClick={() => setChangeInfo(true)}>
-        <ProfileImgWrap src={info.src} />
-        <UserName>{info.userName}</UserName>
-        <Email>{info.email}</Email>
-        <Phone>{info.tel}</Phone>
+        <ProfileImgWrap src={info.profile_image} />
+        <UserName>{info.name}</UserName>
+        <Email>{info.email ? info.email : '이메일 없음'}</Email>
+        <Phone>
+          {info.phone_number ? info.phone_number : '휴대폰 번호 없음'}
+        </Phone>
       </Info>
 
       <WantedPlus>
         <h2>MY Needed+</h2>
         <WantedPlusBadge
-          isSubscribed={info.isSubscribed}
+          isSubscribed={info.is_subscription}
           onClick={goToWantedPlus}
         >
-          {info.isSubscribed ? 'Needed+ 구독 중' : 'Needed+ 구독하기'}
+          {info.is_subscription ? 'Needed+ 구독 중' : 'Needed+ 구독하기'}
         </WantedPlusBadge>
-        {info.isSubscribed ? (
+        {info.is_subscription ? (
           <Subscription>
             <SubscriptionInfo>
               <Label>결제 금액</Label>
@@ -54,12 +62,12 @@ const MyPagePersonal = ({ info }) => {
             </SubscriptionInfo>
             <SubscriptionInfo>
               <Label>다음 결제일</Label>
-              <Content>{getNextPayday(info.payday)}</Content>
+              <Content>{getNextPayday(info.subscription_date)}</Content>
             </SubscriptionInfo>
           </Subscription>
         ) : (
           <Suggestion>
-            직군별 최고의 교육을 한곳에서 <br />볼 수 있는 <em>원티드+</em>를
+            직군별 최고의 교육을 한곳에서 <br />볼 수 있는 <em>니디드+</em>를
             이용해보세요
             <br />
             <em>700+개의 영상</em>을 항상 볼 수 있습니다.
@@ -71,6 +79,8 @@ const MyPagePersonal = ({ info }) => {
         info={info}
         changeInfo={changeInfo}
         setChangeInfo={setChangeInfo}
+        token={token}
+        setIsUpdated={setIsUpdated}
       />
     </Personal>
   );

@@ -2,18 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import ApplicationStatusBlock from './ApplicationStatusBlock';
 
+const STATUS = [
+  { id: 1, label: '지원 완료', name: 'accepted_document' },
+  { id: 2, label: '서류 통과', name: 'application_complete' },
+  { id: 3, label: '최종 합격', name: 'fail_acceptance' },
+  { id: 4, label: '불합격', name: 'final_acceptance' },
+];
+
 const MyPageApplication = ({ info }) => {
   return (
     <Application>
       <Heading>지원 현황</Heading>
       <FlexRowWrap>
-        {info.application.map(item => (
-          <ApplicationStatusBlock
-            key={item.id}
-            label={item.label}
-            count={item.count}
-          />
-        ))}
+        {Object.keys(info).length > 0 &&
+          STATUS.map(item => (
+            <ApplicationStatusBlock
+              key={item.id}
+              label={item.label}
+              count={info.application[0][item.name]}
+            />
+          ))}
       </FlexRowWrap>
     </Application>
   );
