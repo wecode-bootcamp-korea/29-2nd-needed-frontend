@@ -8,6 +8,8 @@ const { Kakao } = window;
 function Login() {
   const [modalOpen, setModalOpen] = useState(false);
   const [profile, setProfile] = useState();
+  const [signupModalOpen, setSignupModalOpen] = useState(false);
+
   //modal
   const modalHandler = () => {
     setModalOpen(prev => !prev);
@@ -44,6 +46,7 @@ function Login() {
             }
             if (res.message === 'NEED_SIGNUP') {
               alert('회원가입이 필요합니다.');
+              setSignupModalOpen(true);
             } else navigate('/');
           });
       },
@@ -64,6 +67,7 @@ function Login() {
     },
     fail: function (error) {},
   });
+
   return (
     <>
       <HandleModar onClick={logOutHandler}>
@@ -108,9 +112,11 @@ function Login() {
               <SocailTitle>Google</SocailTitle>
             </SocialWrap>
           </SocialLog>
-          <SignUpWrap>
-            <StyledSignUp />
-          </SignUpWrap>
+
+          <StyledSignUp
+            modalOpen={signupModalOpen}
+            setModalOpen={setSignupModalOpen}
+          />
         </ModalBody>
       </Modal>
     </>
@@ -264,14 +270,6 @@ const Profile = styled.img`
   height: 28px;
   border-radius: 60%;
 `;
-
-const SignUpWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-`;
-
 const StyledSignUp = styled(SignUp)`
   display: flex;
   justify-content: center;

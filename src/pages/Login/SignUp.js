@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 const { Kakao } = window;
 
-function Login() {
-  const [modalOpen, setModalOpen] = useState(false);
+function SubmitSign({ modalOpen, setModalOpen }) {
+  // const [modalOpen, setModalOpen] = useState(false);
   const [nickName, setnickName] = useState();
   const [email, setEmail] = useState();
   const [signupIn, setSignupIn] = useState({
@@ -60,7 +60,7 @@ function Login() {
 
   return (
     <>
-      <HandleSignUp onClick={ModalHandler}>회원가입</HandleSignUp>
+      <HandleSignUp onClick={ModalHandler} />
       <Modal
         isOpen={modalOpen}
         onRequestClose={ModalHandler}
@@ -203,22 +203,8 @@ const BtWrap = styled.div`
 `;
 
 const HandleSignUp = styled.button`
-  border: 1px solid #e1e2e3;
-  background-color: white;
-  border-radius: 15px;
-  padding: 0 10px;
-  margin-left: 15px;
-  font-weight: 400;
-  height: 40px;
-  width: 100%;
-  font-size: 13px;
-  color: #666;
-  cursor: pointer;
-  &:hover {
-    background-color: #62d9ff;
-    font-weight: 900;
-    color: white;
-  }
+  background-color: transparent;
+  border: none;
 `;
 
-export default Login;
+export default SubmitSign;
