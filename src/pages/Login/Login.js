@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import SignUp from './SignUp';
+import { api } from '../../api/config';
 const { Kakao } = window;
 
-function Login() {
+function Login({ setNeededPlus, setMypageAuth }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [profile, setProfile] = useState();
   const [signupModalOpen, setSignupModalOpen] = useState(false);
@@ -20,6 +21,8 @@ function Login() {
     modalHandler();
     if (sessionStorage.getItem('Authorization')) {
       sessionStorage.removeItem('Authorization');
+      setNeededPlus(false);
+      setMypageAuth(false);
       alert('로그아웃 되었습니다.');
       navigate('/');
       return modalHandler();
@@ -30,7 +33,7 @@ function Login() {
   const kakaoLoginClickHandler = () => {
     Kakao.Auth.loginForm({
       success: function (authObj) {
-        fetch('http://15.165.203.121:8080/users/signin/kakao/callback', {
+        fetch(`${api.fetchLogin}`, {
           method: 'GET',
           headers: {
             'access-token': authObj.access_token,
@@ -43,6 +46,9 @@ function Login() {
             }
             if (res.message === 'SUCCESS') {
               alert('needed에 오신 걸 환영합니다!');
+              setNeededPlus(true);
+              setMypageAuth(true);
+              modalHandler();
             }
             if (res.message === 'NEED_SIGNUP') {
               alert('회원가입이 필요합니다.');
