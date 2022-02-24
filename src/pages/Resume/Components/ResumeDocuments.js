@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { api } from '../../../api/config';
 import ResumeFiles from './ResumeFiles';
 
 function ResumeDocuments() {
-  const [file, setFile] = useState([]);
-
   const handleChange = e => {
     e.preventDefault();
-    setFile(e.target.files[0]);
 
     const formData = new FormData();
-    formData.append('document', file);
+    formData.append('document', e.target.files[0]);
 
-    fetch('http://10.58.7.113:8000/resumes', {
+    fetch(api.fetchResume, {
       method: 'POST',
       headers: {
-        Authorization:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.oj2DJLNHDWRZEbktjHoxmyAwMruKWcLn7tODAiHqe3c',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
       body: formData,
     }).then(res => res.json());
-    // .then(res => console.log(res.message)); //success
   };
 
   return (
@@ -65,7 +61,6 @@ export default ResumeDocuments;
 
 const Box = styled.div`
   background-color: #f8f8f8;
-  /* height: 100vh; */
 `;
 
 const Container = styled.div`
