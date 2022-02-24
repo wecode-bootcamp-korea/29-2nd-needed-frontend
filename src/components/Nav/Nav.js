@@ -88,7 +88,7 @@ const Nav = () => {
           </SearchWrap>
           <LogIn />
           <RoundBt>
-            {sessionStorage.getItem('Authorization') ? (
+            {sessionStorage.Authorization ? (
               <StyledLink to="/mypage">마이페이지</StyledLink>
             ) : (
               <StyledLink to="/">기업페이지</StyledLink>
