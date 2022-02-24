@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
+import { api } from '../../api/config';
 const { Kakao } = window;
 
 function SubmitSign({ modalOpen, setModalOpen }) {
@@ -23,7 +24,7 @@ function SubmitSign({ modalOpen, setModalOpen }) {
 
   const signUpSubmit = () => {
     if (sessionStorage.Authorization) {
-      fetch('http://15.165.203.121:8080/users/profile', {
+      fetch(`${api.fetchProfile}`, {
         method: 'POST',
         headers: {
           Authorization: sessionStorage.getItem('Authorization'),

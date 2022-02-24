@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SIDEBAR_INSIDE } from './SIDEBAR_INSIDE';
 import SideInside from './SideInside';
 import LogIn from '../../pages/Login/Login';
+import SignUp from '../../pages/Login/SignUp';
+import { api } from '../../api/config';
 
 const Nav = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [neededPlus, setNeededPlus] = useState(false);
+  const [mypageAuth, setMypageAuth] = useState(false);
+  const logAuth = sessionStorage.Authorization;
 
   const ModalHandler = () => {
     setModalOpen(prev => !prev);
   };
 
-  const neededAuth = () => {
-    if (sessionStorage.Authorization) {
-      fetch('http://15.165.203.121:8080/neededplus', {
+  useEffect(() => {
+    if (logAuth) {
+      fetch(`${api.fetchNeededPlus}`, {
         method: 'GET',
         headers: {
           Authorization: sessionStorage.getItem('Authorization'),
@@ -28,7 +32,7 @@ const Nav = () => {
             : console.info('결과: ', result)
         );
     }
-  };
+  }, [logAuth, neededPlus]);
 
   return (
     <Navigation>
@@ -73,8 +77,8 @@ const Nav = () => {
             <StyledLink to="/resume">이력서</StyledLink>
           </Menu>
           <Menu>커뮤니티</Menu>
-          <Menu onClick={neededAuth}>
-            {neededPlus === true ? (
+          <Menu>
+            {neededPlus ? (
               <StyledLink to="neededPlus/contents">needed +</StyledLink>
             ) : (
               <StyledLink to="/neededPlus/landing">needed +</StyledLink>
@@ -86,9 +90,9 @@ const Nav = () => {
           <SearchWrap>
             <Search src="/images/nav/search.png" alt="search" />
           </SearchWrap>
-          <LogIn />
+          <LogIn setNeededPlus={setNeededPlus} setMypageAuth={setMypageAuth} />
           <RoundBt>
-            {sessionStorage.Authorization ? (
+            {mypageAuth ? (
               <StyledLink to="/mypage">마이페이지</StyledLink>
             ) : (
               <StyledLink to="/">기업페이지</StyledLink>
