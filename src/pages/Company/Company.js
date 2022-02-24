@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import CompanyHead from './components/CompanyHead';
 import CompanyInfo from './components/CompanyInfo';
 import CompanyAside from './components/CompanyAside';
+import { api } from '../../api/config';
 
 function Company() {
   const [companyData, setCompanyData] = useState({});
   const params = useParams();
 
   useEffect(() => {
-    fetch(`http://15.165.203.121:8080/companies/${params.id}`)
+    fetch(`${api.fetchCompanies}/${params.id}`)
       .then(res => res.json())
       .then(data => setCompanyData(data.result));
   }, []);

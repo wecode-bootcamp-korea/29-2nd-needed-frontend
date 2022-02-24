@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { JOB_DETAIL } from './JOB_DETAIL_MOCK';
 import JobDetailHeader from './JobDetailHeader';
 import JobDetailContent from './JobDetailContent';
 import JobDetailInfo from './JobDetailInfo';
@@ -9,32 +8,35 @@ import JobDetailRegulation from './JobDetailRegulation';
 import JobDetailShareModal from './JobDetailShareModal';
 import JobDetailApplyRender from './JobDetailApplyRender';
 import JobCard from '../../components/JobCard/JobCard';
-import { POSITIONS } from '../JobList/JOB_LIST_DATA';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { api } from '../../api/config';
 
 const JobDetail = () => {
-  const {
-    position,
-    company,
-    company_id,
-    company_category,
-    company_logo,
-    img_url,
-    isResponse,
-    city,
-    country,
-    mainparagraph,
-    task,
-    qualification,
-    extra,
-    welfare,
-    duedate,
-    address,
-    reward,
-  } = JOB_DETAIL;
-
+  const [jobDetailInfo, setJobDetailInfo] = useState({});
+  const [recommendations, setRecommendations] = useState([]);
   const [isApplicationFormOpen, setIsApplicationFormOpen] = useState(false);
-
   const [isShareOpen, setIsShareOpen] = useState(false);
+
+  const params = useParams();
+
+  useEffect(() => {
+    axios.get(`${api.fetchRecruitments}/${params.id}`).then(res => {
+      setJobDetailInfo(res.data.result);
+    });
+  }, [params.id]);
+
+  useEffect(() => {
+    if (jobDetailInfo.occupation_subcategory_id) {
+      axios
+        .get(
+          `${api.fetchRecruitments}?subcategory=${jobDetailInfo.occupation_subcategory_id}`
+        )
+        .then(res => {
+          setRecommendations(res.data.Recruitment);
+        });
+    }
+  }, [jobDetailInfo.occupation_subcategory_id]);
 
   const handleShareModal = () => {
     if (isShareOpen) {
@@ -51,36 +53,32 @@ const JobDetail = () => {
       <Recruitment>
         <Main>
           <JobDetailHeader
-            img_url={img_url}
-            position={position}
-            company={company}
-            isResponse={isResponse}
-            city={city}
-            country={country}
-            company_id={company_id}
+            img_url={jobDetailInfo?.image?.[1].image}
+            name={jobDetailInfo.name}
+            company_name={jobDetailInfo.company_name}
+            province={jobDetailInfo.province}
+            country={jobDetailInfo.country}
+            company_id={jobDetailInfo.company_id}
           />
-          <JobDetailContent
-            mainparagraph={mainparagraph}
-            task={task}
-            qualification={qualification}
-            extra={extra}
-            welfare={welfare}
-          />
+          <JobDetailContent description={jobDetailInfo.description} />
           <hr />
-          <JobDetailInfo duedate={duedate} address={address} />
-          <JobDetailCompany
-            company={company}
-            company_category={company_category}
-            company_logo={company_logo}
-            company_id={company_id}
+          <JobDetailInfo
+            deadline={jobDetailInfo.deadline}
+            address={jobDetailInfo.address}
+            country={jobDetailInfo.country}
           />
-          <JobDetailRegulation company={company} />
+          <JobDetailCompany
+            company_name={jobDetailInfo.company_name}
+            company_logo={jobDetailInfo?.image?.[0].image}
+            company_id={jobDetailInfo.company_id}
+          />
+          <JobDetailRegulation company_name={jobDetailInfo.company_name} />
         </Main>
         <Sub>
           <JobDetailApplyRender
             isApplicationFormOpen={isApplicationFormOpen}
             setIsApplicationFormOpen={setIsApplicationFormOpen}
-            reward={reward}
+            compensation={jobDetailInfo.compensation}
             isShareOpen={isShareOpen}
             handleShareModal={handleShareModal}
           />
@@ -93,9 +91,10 @@ const JobDetail = () => {
       <Suggestions>
         <h1>이 포지션을 찾고 계셨나요?</h1>
         <div className="cardWrap">
-          {POSITIONS.map(card => (
-            <JobCard key={card.id} data={card} />
-          ))}
+          {recommendations.length > 0 &&
+            recommendations.map(card => (
+              <JobCard key={card.id} positions={card} />
+            ))}
         </div>
       </Suggestions>
     </>

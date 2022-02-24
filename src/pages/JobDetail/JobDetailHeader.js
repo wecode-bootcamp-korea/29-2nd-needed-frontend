@@ -4,24 +4,24 @@ import { Link } from 'react-router-dom';
 
 const JobDetailHeader = ({
   img_url,
-  position,
-  company,
-  isResponse,
-  city,
+  name,
+  company_name,
+  province,
   country,
   company_id,
 }) => {
   return (
     <Header>
       <ImgContainer src={img_url} />
-      <Title>{position}</Title>
+      <Title>{name}</Title>
       <Info>
         <Company>
-          <Link to={'/company/' + company_id}>{company}</Link>
+          <Link to={'/company/' + company_id}>{company_name}</Link>
         </Company>
-        {isResponse && <ResponseBadge>응답률 매우 높음</ResponseBadge>}
+        {/* TODO: 응답률 부분은 추가 구현으로 넘겼습니다. */}
+        {/* {isResponse && <ResponseBadge>응답률 매우 높음</ResponseBadge>} */}
         <Location>
-          {city} · {country}
+          {province} · {country}
         </Location>
       </Info>
     </Header>
@@ -50,7 +50,7 @@ const Info = styled.div`
 `;
 
 const Company = styled.div`
-  margin-right: 10px;
+  margin-right: 4px;
   font-size: 14px;
   font-weight: 600;
 
@@ -60,13 +60,14 @@ const Company = styled.div`
   }
 `;
 
-const ResponseBadge = styled.div`
-  padding: 4px;
-  border: 1px ${props => props.theme.themePink} solid;
-  border-radius: 2px;
-  color: ${props => props.theme.themePink};
-  font-size: 10px;
-`;
+// TODO : 응답률은 추가구현입니다.
+// const ResponseBadge = styled.div`
+//   padding: 4px;
+//   border: 1px ${props => props.theme.themePink} solid;
+//   border-radius: 2px;
+//   color: ${props => props.theme.themePink};
+//   font-size: 10px;
+// `;
 
 const Location = styled.span`
   color: #999;

@@ -13,10 +13,12 @@ import MyPage from './pages/MyPage/MyPage';
 import WantedPlusLanding from './pages/WantedPlus/WantedPlusLanding';
 import WantedPlusContents from './pages/WantedPlus/WantedPlusContents';
 import Resume from './pages/Resume/Resume';
+import ScrollToTop from './components/ScrollToTop';
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Nav />
       <Routes>
         <Route path="/" element={<Main />} />

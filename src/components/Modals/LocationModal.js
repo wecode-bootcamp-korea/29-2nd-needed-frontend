@@ -90,7 +90,7 @@ const Background = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 100;
+  z-index: ${props => (props.isOpen ? '1000' : '0')};
 `;
 
 const Modal = styled.div`

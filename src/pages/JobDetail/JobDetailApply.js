@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const JobDetailApply = ({
-  reward,
+  compensation,
   setIsApplicationFormOpen,
   isShareOpen,
   handleShareModal,
@@ -19,11 +19,15 @@ const JobDetailApply = ({
       <div className="flexWrap">
         <Reward>
           <Receiver>추천인</Receiver>
-          <RewardAmount>{(reward / 2).toLocaleString()}원</RewardAmount>
+          <RewardAmount>
+            {compensation && (compensation / 2).toLocaleString()}원
+          </RewardAmount>
         </Reward>
         <Reward>
           <Receiver>지원자</Receiver>
-          <RewardAmount>{(reward / 2).toLocaleString()}원</RewardAmount>
+          <RewardAmount>
+            {compensation && (compensation / 2).toLocaleString()}원
+          </RewardAmount>
         </Reward>
       </div>
 
