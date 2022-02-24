@@ -46,7 +46,6 @@ function Login({ setNeededPlus, setMypageAuth }) {
             }
             if (res.message === 'SUCCESS') {
               alert('needed에 오신 걸 환영합니다!');
-              setNeededPlus(true);
               setMypageAuth(true);
               modalHandler();
             }
