@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { api } from '../../../api/config';
 
 function Files() {
   const [fetchedFiles, setFetchedFiles] = useState([]);
 
   useEffect(() => {
-    fetch('http://10.58.7.113:8000/resumes', {
+    fetch(api.fetchResume, {
       headers: {
-        Authorization:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.oj2DJLNHDWRZEbktjHoxmyAwMruKWcLn7tODAiHqe3c',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
     })
       .then(res => res.json())
@@ -52,7 +52,8 @@ const MapBox = styled.div`
   margin: 20px 20px 0 0;
 
   span {
-    font-size: 20px;
+    padding: 0 10px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 1.5;
   }

@@ -11,7 +11,7 @@ function BannerSlider() {
     infinite: true,
     slidesToShow: 1,
     autoplay: true,
-    autoplaySpeed: 1000,
+    autoplaySpeed: 3000,
     centerMode: true,
     centerPadding: '160px',
     className: 'center',
