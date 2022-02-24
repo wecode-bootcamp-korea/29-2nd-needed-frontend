@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import CompanyHead from './components/CompanyHead';
 import CompanyInfo from './components/CompanyInfo';
@@ -6,11 +7,12 @@ import CompanyAside from './components/CompanyAside';
 
 function Company() {
   const [companyData, setCompanyData] = useState({});
+  const params = useParams();
 
   useEffect(() => {
-    fetch('/data/COMPANY_DATA.json')
+    fetch(`http://15.165.203.121:8080/companies/${params.id}`)
       .then(res => res.json())
-      .then(([data]) => setCompanyData(data));
+      .then(data => setCompanyData(data.result));
   }, []);
 
   return (

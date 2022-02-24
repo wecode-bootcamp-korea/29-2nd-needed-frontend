@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { CAREER_ID_TO_STR } from './MYPAGE_IDS';
 
 const MyPageProfession = ({ info, setIsProfessionEdit }) => {
   return (
@@ -8,19 +9,21 @@ const MyPageProfession = ({ info, setIsProfessionEdit }) => {
       <ProfessionInfo>
         <Item>
           <Label>직군</Label>
-          <Content>{info.profession.category}</Content>
+          <Content>{info.job_category}</Content>
         </Item>
         <Item>
           <Label>직무</Label>
-          <Content>{info.profession.subcategory}</Content>
+          <Content>{info.job_subcategory}</Content>
         </Item>
         <Item>
           <Label>경력</Label>
-          <Content>{info.profession.years}</Content>
+          <Content>{CAREER_ID_TO_STR[info.career]}</Content>
         </Item>
         <Item>
           <Label>연봉</Label>
-          <Content currency>{info.profession.salary}</Content>
+          <Content currency>
+            {Object.keys(info).length > 0 && info.salary}
+          </Content>
         </Item>
       </ProfessionInfo>
       <ModifyBtn onClick={() => setIsProfessionEdit(true)}>수정</ModifyBtn>
@@ -67,6 +70,7 @@ const Content = styled.div`
   width: 80%;
   height: 52px;
   padding: 18px 0 18px 18px;
+  font-size: 14px;
   background-color: #f8f8fa;
 
   ${({ currency }) =>

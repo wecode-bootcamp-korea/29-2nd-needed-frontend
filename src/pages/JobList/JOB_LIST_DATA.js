@@ -54,7 +54,7 @@ export const JOB_CATEGORY = {
       },
       {
         id: 2,
-        category: '브랜딩',
+        category: 'CI/BI 디자인',
         linkto: 'branding',
       },
     ],
@@ -79,7 +79,7 @@ export const JOB_CATEGORY = {
     categories: [
       {
         id: 1,
-        category: '재무회계 담당자',
+        category: '재무회계담당자',
         linkto: 'accounting',
       },
       {

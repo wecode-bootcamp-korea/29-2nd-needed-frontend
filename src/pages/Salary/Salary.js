@@ -3,6 +3,21 @@ import styled from 'styled-components';
 import GraphComponent from './components/GraphComponent';
 
 function Salary() {
+  const SALARY_DATA = [
+    { name: '신입', 연봉: 0 },
+    { name: '1년', 연봉: 0 },
+    { name: '2년', 연봉: 0 },
+    { name: '3년', 연봉: 0 },
+    { name: '4년', 연봉: 0 },
+    { name: '5년', 연봉: 0 },
+    { name: '6년', 연봉: 0 },
+    { name: '7년', 연봉: 0 },
+    { name: '8년', 연봉: 0 },
+    { name: '9년', 연봉: 0 },
+    { name: '10년', 연봉: 0 },
+  ];
+  const [fetchedSalary, setFetchedSalary] = useState({});
+
   const [selectOptions, setSelectOptions] = useState({
     개발: '',
   });
@@ -15,7 +30,15 @@ function Salary() {
   });
 
   const handleChange = ({ target }) => {
-    setSelectedValue(prev => ({ ...prev, [target.name]: target.value }));
+    if (target.name === 'mainSelected') {
+      setSelectedValue(prev => ({
+        ...prev,
+        [target.name]: target.value,
+        subSelected: selectOptions[target.value][0],
+      }));
+    } else {
+      setSelectedValue(prev => ({ ...prev, [target.name]: target.value }));
+    }
   };
 
   const yearOptions = ['신입'];
@@ -42,85 +65,155 @@ function Salary() {
     }
   }, [selectOptions]);
 
+  const salaryCategoryURLFetcher = subCateg => {
+    const expr = subCateg;
+    switch (expr) {
+      case '프론트엔드':
+        return 1;
+        break;
+      case '백엔드':
+        return 2;
+        break;
+      case 'UI/UX 디자인':
+        return 3;
+        break;
+      case 'CI/BI 디자인':
+        return 4;
+        break;
+      case '외국어 교육':
+        return 5;
+        break;
+      case '교육 기획':
+        return 6;
+        break;
+      case '재무회계담당자':
+        return 7;
+        break;
+      case '자산관리사':
+        return 8;
+        break;
+      case '컨텐츠 마케터':
+        return 9;
+        break;
+      case '퍼포먼스 마케터':
+        return 10;
+        break;
+      default:
+        return 0;
+    }
+  };
+
+  useEffect(() => {
+    fetch(
+      `http://10.58.7.168:8000/users/salary/${salaryCategoryURLFetcher(
+        selectedValue.subSelected
+      )}`
+    )
+      .then(res => res.json())
+      .then(salaryData => {
+        setFetchedSalary(salaryData.result);
+      });
+  }, [selectedValue.subSelected]);
+
+  const changeSalaryData = () => {
+    if (Object.keys(fetchedSalary).length > 0) {
+      for (let i = 0; i < Object.keys(fetchedSalary).length; i++) {
+        SALARY_DATA[i]['연봉'] = fetchedSalary[`salary_avg_career_${i}`];
+      }
+    }
+  };
+  changeSalaryData();
+
+  //console.log(fetchedSalary);
+
   return (
-    <StyledSalary>
-      <GraphSection>
-        <GraphWrap>
-          <GraphComponent
-            data={SALARY_DATA}
-            selectedYear={selectedValue.yearSelected}
-          />
-          <GraphAside>
-            <StyledH3>{selectedValue.mainSelected}</StyledH3>
-            <StyledH3>{selectedValue.subSelected}</StyledH3>
-            <StyledH4>{`${selectedValue.yearSelected} ${selectedValue.subSelected} 예상 연봉`}</StyledH4>
-            <StyledH4>
-              <span>{SALARY_DATA[yearIndex]['연봉'].toLocaleString()}</span>{' '}
-              만원
-            </StyledH4>
-            <StyledCompare isItZero={selectedValue.inputNumber}>
-              {selectedValue.yearSelected}차
-              {percentage(
-                SALARY_DATA[yearIndex]['연봉'],
-                selectedValue.inputNumber
-              )}
-            </StyledCompare>
-          </GraphAside>
-        </GraphWrap>
-      </GraphSection>
-      <SelectContainer>
-        <SelectWrap>
-          <StyledSelect
-            name="mainSelected"
-            value={selectedValue.mainSelected}
-            onChange={handleChange}
-          >
-            {selectOptions?.mainCategories?.map((category, idx) => {
-              return (
-                <option key={idx} value={category}>
-                  {category}
-                </option>
-              );
-            })}
-          </StyledSelect>
-          <StyledSelect
-            name="subSelected"
-            value={selectedValue.subSelected}
-            onChange={handleChange}
-          >
-            {selectedMain &&
-              selectedMain.map((category, idx) => {
-                return (
-                  <option key={idx} value={category}>
-                    {category}
-                  </option>
-                );
-              })}
-          </StyledSelect>
-          <StyledSelect
-            name="yearSelected"
-            value={selectedValue.yearSelected}
-            onChange={handleChange}
-          >
-            {yearOptions?.map((year, idx) => {
-              return (
-                <option key={idx} value={year}>
-                  {year}
-                </option>
-              );
-            })}
-          </StyledSelect>
-          <StyledInput
-            type="number"
-            name="inputNumber"
-            onChange={handleChange}
-          />
-        </SelectWrap>
-      </SelectContainer>
-      <section>
-        <StyledDown />
-      </section>
-    </StyledSalary>
+    <div>
+      {SALARY_DATA && selectOptions ? (
+        <StyledSalary>
+          <GraphSection>
+            <GraphWrap>
+              <GraphComponent
+                data={SALARY_DATA}
+                selectedYear={selectedValue.yearSelected}
+              />
+              <GraphAside>
+                <StyledH3>{selectedValue.mainSelected}</StyledH3>
+                <StyledH3>{selectedValue.subSelected}</StyledH3>
+                <StyledH4>{`${selectedValue.yearSelected} ${selectedValue.subSelected} 예상 연봉`}</StyledH4>
+                <StyledH4>
+                  <span>
+                    {SALARY_DATA[yearIndex]['연봉'] &&
+                      SALARY_DATA[yearIndex]['연봉'].toLocaleString()}
+                  </span>{' '}
+                  만원
+                </StyledH4>
+                <StyledCompare isItZero={selectedValue.inputNumber}>
+                  {selectedValue.yearSelected}차
+                  {percentage(
+                    SALARY_DATA[yearIndex]['연봉'],
+                    selectedValue.inputNumber
+                  )}
+                </StyledCompare>
+              </GraphAside>
+            </GraphWrap>
+          </GraphSection>
+          <SelectContainer>
+            <SelectWrap>
+              <StyledSelect
+                name="mainSelected"
+                value={selectedValue.mainSelected}
+                onChange={handleChange}
+              >
+                {selectOptions?.mainCategories?.map((category, idx) => {
+                  return (
+                    <option key={idx} value={category}>
+                      {category}
+                    </option>
+                  );
+                })}
+              </StyledSelect>
+              <StyledSelect
+                name="subSelected"
+                value={selectedValue.subSelected}
+                onChange={handleChange}
+              >
+                {selectedMain &&
+                  selectedMain.map((category, idx) => {
+                    return (
+                      <option key={idx} value={category}>
+                        {category}
+                      </option>
+                    );
+                  })}
+              </StyledSelect>
+              <StyledSelect
+                name="yearSelected"
+                value={selectedValue.yearSelected}
+                onChange={handleChange}
+              >
+                {yearOptions?.map((year, idx) => {
+                  return (
+                    <option key={idx} value={year}>
+                      {year}
+                    </option>
+                  );
+                })}
+              </StyledSelect>
+              <StyledInput
+                type="number"
+                name="inputNumber"
+                onChange={handleChange}
+              />
+            </SelectWrap>
+          </SelectContainer>
+          <section>
+            <StyledDown />
+          </section>
+        </StyledSalary>
+      ) : (
+        <div>1</div>
+      )}
+    </div>
   );
 }
 
@@ -209,18 +302,5 @@ const StyledInput = styled.input`
 const StyledDown = styled.div`
   height: 70px;
 `;
-const SALARY_DATA = [
-  { name: '신입', 연봉: 3259 },
-  { name: '1년', 연봉: 3365 },
-  { name: '2년', 연봉: 3696 },
-  { name: '3년', 연봉: 3941 },
-  { name: '4년', 연봉: 4303 },
-  { name: '5년', 연봉: 4529 },
-  { name: '6년', 연봉: 4789 },
-  { name: '7년', 연봉: 5312 },
-  { name: '8년', 연봉: 5565 },
-  { name: '9년', 연봉: 6141 },
-  { name: '10년', 연봉: 6783 },
-];
 
 export default Salary;

@@ -8,68 +8,96 @@ import SignUp from '../../pages/Login/SignUp';
 
 const Nav = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [neededPlus, setNeededPlus] = useState(false);
 
   const ModalHandler = () => {
     setModalOpen(prev => !prev);
   };
 
+  const neededAuth = () => {
+    if (sessionStorage.Authorization) {
+      fetch('http://15.165.203.121:8080/neededplus', {
+        method: 'GET',
+        headers: {
+          Authorization: sessionStorage.getItem('Authorization'),
+        },
+      })
+        .then(response => response.json())
+        .then(result =>
+          result.message === 'SUCCESS'
+            ? setNeededPlus(true)
+            : console.info('결과: ', result)
+        );
+    }
+  };
+
   return (
-    <>
-      <Navigation>
-        <NavContainer>
-          <NavLeft>
-            <NavBt onClick={ModalHandler}>
-              <MenuImg src="images/nav/menu.png" alt="menu" />
-            </NavBt>
-            <StyledLink to="/">
-              <Logo src="/images/nav/needed.png" alt="log" />
+    <Navigation>
+      <NavContainer>
+        <NavLeft>
+          <NavBt onClick={ModalHandler}>
+            <MenuImg src="/images/nav/menu.png" alt="menu" />
+            <SlideWrap
+              modalOpen={modalOpen}
+              onMouseOver={() => setModalOpen(true)}
+              onMouseOut={() => setModalOpen(false)}
+            >
+              <SlideBox onClick={ModalHandler}>
+                {SIDEBAR_INSIDE.map(list => {
+                  return (
+                    <SideInside
+                      key={list.id}
+                      title={list.title}
+                      url={list.url}
+                      subNav={list.subNav}
+                    />
+                  );
+                })}
+              </SlideBox>
+            </SlideWrap>
+          </NavBt>
+          <StyledLink to="/">
+            <Logo src="/images/nav/needed.png" alt="logo" />
+          </StyledLink>
+        </NavLeft>
+        <TextBox>
+          <Menu>
+            <StyledLink to="/recruitments?country=all&job_sort=created_at">
+              채용
             </StyledLink>
-          </NavLeft>
-          <TextBox>
-            <Menu>
-              <StyledLink to="/recruitments">채용</StyledLink>
-            </Menu>
-            <Menu>이벤트</Menu>
-            <Menu>
-              <StyledLink to="/salary">직군별 연봉</StyledLink>
-            </Menu>
-            <Menu>
-              <StyledLink to="/resume">이력서</StyledLink>
-            </Menu>
-            <Menu>커뮤니티</Menu>
-            <Menu>
-              <StyledLink to="/salary">needed +</StyledLink>
-            </Menu>
-            <Menu>AI 합격예측</Menu>
-          </TextBox>
-          <NavRight>
-            <SearchWrap>
-              <Search src="/images/nav/search.png" alt="search" />
-            </SearchWrap>
-            <LogIn />
-            <RoundBt>기업서비스</RoundBt>
-          </NavRight>
-        </NavContainer>
-      </Navigation>
-      <SlideWrap
-        modalOpen={modalOpen}
-        onMouseOver={() => setModalOpen(true)}
-        onMouseOut={() => setModalOpen(false)}
-      >
-        <SlideBox>
-          {SIDEBAR_INSIDE.map(list => {
-            return (
-              <SideInside
-                key={list.id}
-                title={list.title}
-                url={list.url}
-                subNav={list.subNav}
-              />
-            );
-          })}
-        </SlideBox>
-      </SlideWrap>
-    </>
+          </Menu>
+          <Menu>이벤트</Menu>
+          <Menu>
+            <StyledLink to="/salary">직군별 연봉</StyledLink>
+          </Menu>
+          <Menu>
+            <StyledLink to="/resume">이력서</StyledLink>
+          </Menu>
+          <Menu>커뮤니티</Menu>
+          <Menu onClick={neededAuth}>
+            {neededPlus === true ? (
+              <StyledLink to="neededPlus/contents">needed +</StyledLink>
+            ) : (
+              <StyledLink to="/neededPlus/landing">needed +</StyledLink>
+            )}
+          </Menu>
+          <Menu>AI 합격예측</Menu>
+        </TextBox>
+        <NavRight>
+          <SearchWrap>
+            <Search src="/images/nav/search.png" alt="search" />
+          </SearchWrap>
+          <LogIn />
+          <RoundBt>
+            {sessionStorage.Authorization ? (
+              <StyledLink to="/mypage">마이페이지</StyledLink>
+            ) : (
+              <StyledLink to="/">기업페이지</StyledLink>
+            )}
+          </RoundBt>
+        </NavRight>
+      </NavContainer>
+    </Navigation>
   );
 };
 
@@ -95,8 +123,7 @@ const NavContainer = styled.div`
 `;
 
 const NavLeft = styled.div`
-  margin-left: 20px;
-  margin-right: 50px;
+  margin-right: 4%;
 `;
 
 const NavBt = styled.button`
@@ -121,7 +148,8 @@ const Logo = styled.img`
 const TextBox = styled.div`
   height: 21px;
   line-height: 20px;
-  margin-right: 50px;
+  margin-left: 60px;
+  margin-right: 60px;
   li {
     text-decoration: none;
     display: inline-block;
@@ -189,7 +217,6 @@ const SlideBox = styled.div`
   position: absolute;
   width: 180px;
   height: 280px;
-  left: 160px;
   background-color: white;
   border: 1px solid #e1e2e3;
 `;

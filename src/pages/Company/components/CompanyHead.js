@@ -2,22 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 
 function CompanyHead({ companyData }) {
-  const { companyName, companyLogo } = companyData;
+  const { name, images } = companyData;
 
   return (
-    companyData && (
-      <HeaderWrap>
-        <CompanyHeader>
-          <LogoName>
-            <LogoWrap className="logo">
-              <LogoImg alt="company logo" src={companyLogo} />
-            </LogoWrap>
-            {companyName}
-          </LogoName>
-          <FollowButton>팔로우</FollowButton>
-        </CompanyHeader>
-      </HeaderWrap>
-    )
+    <div>
+      {companyData && images && (
+        <HeaderWrap>
+          <CompanyHeader>
+            <LogoName>
+              <LogoWrap className="logo">
+                <LogoImg alt="company logo" src={images[0].image} />
+              </LogoWrap>
+              {name}
+            </LogoName>
+            <FollowButton>팔로우</FollowButton>
+          </CompanyHeader>
+        </HeaderWrap>
+      )}
+    </div>
   );
 }
 

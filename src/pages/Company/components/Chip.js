@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 function Chip({ data }) {
-  return <SeparateChip>#{data}</SeparateChip>;
+  return <SeparateChip>#{data.name}</SeparateChip>;
 }
 
 const SeparateChip = styled.div`

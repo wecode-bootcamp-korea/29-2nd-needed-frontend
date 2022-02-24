@@ -1,9 +1,32 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import GlobalStyle from '../../styles/GlobalStyle';
 import theme from '../../styles/theme';
 
 function WantedPlusLanding() {
+  const navigate = useNavigate();
+  const JWT =
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.oj2DJLNHDWRZEbktjHoxmyAwMruKWcLn7tODAiHqe3c';
+
+  const yesSubscribe = () => {
+    fetch('http://15.165.203.121:8080/neededplus', {
+      method: 'PATCH',
+      headers: {
+        Authorization: JWT,
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res.message);
+        if (res.message === 'SUCCESS') {
+          navigate('/neededPlus/contents');
+        } else if (res.message === 'ALREADY_SUBSCRIBED') {
+          alert('이미 구독했습니다!');
+        }
+      });
+  };
+
   return (
     <>
       <GlobalStyle />
@@ -37,7 +60,7 @@ function WantedPlusLanding() {
                 월<span className="span">7,900</span>원
               </div>
             </ButtonMiddle>
-            <ButtonRight>첫 구독 시 0원!</ButtonRight>
+            <ButtonRight onClick={yesSubscribe}>첫 구독 시 0원!</ButtonRight>
           </ButtonWrap>
         </LandingWrap>
       </ThemeProvider>
@@ -108,7 +131,7 @@ const ButtonLeft = styled.div`
   width: 65px;
   height: 65px;
   border-radius: 50%;
-  background-color: ${props => props.theme.themePink};
+  background-color: ${props => props.theme.themeBlue};
   color: #fff;
   display: flex;
   align-items: center;
@@ -147,14 +170,14 @@ const ButtonRight = styled.button`
   font-weight: 600;
   padding: 12px 50px;
   border-radius: 30px;
-  border: 1px solid ${props => props.theme.themePink};
-  color: ${props => props.theme.themePink};
+  border: 1px solid ${props => props.theme.themeBlue};
+  color: ${props => props.theme.themeBlue};
   background-color: #fff;
   cursor: pointer;
 
   &:hover {
     color: #fff;
-    background-color: ${props => props.theme.themePink};
+    background-color: ${props => props.theme.themeBlue};
   }
 `;
 
