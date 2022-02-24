@@ -4,7 +4,6 @@ import Modal from 'react-modal';
 const { Kakao } = window;
 
 function SubmitSign({ modalOpen, setModalOpen }) {
-  // const [modalOpen, setModalOpen] = useState(false);
   const [nickName, setnickName] = useState();
   const [email, setEmail] = useState();
   const [signupIn, setSignupIn] = useState({
@@ -18,7 +17,7 @@ function SubmitSign({ modalOpen, setModalOpen }) {
     setSignupIn({ ...signupIn, [name]: value });
   }
 
-  const ModalHandler = () => {
+  const handleModar = () => {
     setModalOpen(prev => !prev);
   };
 
@@ -60,15 +59,11 @@ function SubmitSign({ modalOpen, setModalOpen }) {
 
   return (
     <>
-      <HandleSignUp onClick={ModalHandler} />
-      <Modal
-        isOpen={modalOpen}
-        onRequestClose={ModalHandler}
-        style={modalStyle}
-      >
+      <HandleSignUp onClick={handleModar} />
+      <Modal isOpen={modalOpen} onRequestClose={handleModar} style={modalStyle}>
         <ModalTop>
           <SignUp>회원가입</SignUp>
-          <ModalOffBt onClick={ModalHandler}>
+          <ModalOffBt onClick={handleModar}>
             <ModalOut
               src="/images/signUp/free-icon-letter-x-109602.png"
               alt="x"
