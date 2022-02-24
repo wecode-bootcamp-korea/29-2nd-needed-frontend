@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function Resume() {
-  const click = () => {
-    <Link to="/Components/ResumeDocuments" />;
-  };
   return (
     <>
       <div>
@@ -19,15 +16,19 @@ function Resume() {
             </p>
           </Body>
           <ButtonBox>
-            <Button onClick={click}>이력서 관리</Button>
-            <Button1 onClick={click}>새 이력서 작성</Button1>
+            <Link to="/newresume">
+              <Button>이력서 관리</Button>
+            </Link>
+            <Link to="/newresume">
+              <Button1>새 이력서 작성</Button1>
+            </Link>
           </ButtonBox>
         </HeadBox>
       </div>
       <ImageBox>
         <img src="./images/office_pic.png" alt="business" />
         <img
-          src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80"
+          src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
           alt="officepeople"
         />
         <ResumeIntro>
@@ -40,15 +41,17 @@ function Resume() {
         </ResumeIntro>
         <ResumeMiddle>
           <img src="./images/ipad.png" alt="ipad" />
-          <h1>활용이 자유로운</h1>
-          <p>
-            PC/모바일 어디에서나 작성할 수 있고, PDF 파일로 저장과 활용이
-            쉽습니다.
-          </p>
-          <p>
-            가독성에 중점을 두고 설계하여, 파일 저장/출력시에도 돋보이는
-            결과물을 얻을 수 있습니다.
-          </p>
+          <div>
+            <h1>활용이 자유로운</h1>
+            <p>
+              PC/모바일 어디에서나 작성할 수 있고, PDF 파일로 저장과 활용이
+              쉽습니다.
+            </p>
+            <p>
+              가독성에 중점을 두고 설계하여, 파일 저장/출력시에도 돋보이는
+              결과물을 얻을 수 있습니다.
+            </p>
+          </div>
         </ResumeMiddle>
       </ImageBox>
 
@@ -67,7 +70,7 @@ const HeadBox = styled.div`
 `;
 const Head = styled.h1`
   font-size: 55px;
-  padding-top: 260px;
+  padding-top: 70px;
   padding-bottom: 25px;
 `;
 
@@ -79,6 +82,9 @@ const Body = styled.h3`
 
 const ButtonBox = styled.div`
   padding-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 `;
 
 const Button = styled.button`
@@ -125,23 +131,41 @@ const ResumeIntro = styled.div`
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 50%;
+  top: 28%;
   left: 50%;
   transform: translate(-50%, -50%);
   h1 {
     padding-top: 150px;
     font-size: 40px;
-    color: black;
+    color: white;
   }
   p {
     padding-top: 20px;
     font-size: 18px;
-    color: black;
+    color: white;
     line-height: 1.9;
     font-weight: 600;
   }
 `;
 
-const ResumeMiddle = styled.div``;
+const ResumeMiddle = styled.div`
+  margin: 0 auto;
+  padding-top: 40px;
+  div {
+    padding-top: 20px;
+    h1 {
+      padding-top: -250px;
+      font-size: 40px;
+      color: black;
+    }
+    p {
+      padding-top: 20px;
+      font-size: 18px;
+      color: black;
+      line-height: 1.9;
+      font-weight: 600;
+    }
+  }
+`;
 
 export default Resume;

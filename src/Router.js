@@ -14,6 +14,7 @@ import WantedPlusLanding from './pages/WantedPlus/WantedPlusLanding';
 import WantedPlusContents from './pages/WantedPlus/WantedPlusContents';
 import Resume from './pages/Resume/Resume';
 import ScrollToTop from './components/ScrollToTop';
+import ResumeDocuments from './pages/Resume/Components/ResumeDocuments';
 
 const Router = () => {
   return (
@@ -37,6 +38,7 @@ const Router = () => {
         <Route path="/neededPlus/landing" element={<WantedPlusLanding />} />
         <Route path="/neededPlus/contents" element={<WantedPlusContents />} />
         <Route path="/resume" element={<Resume />} />
+        <Route path="/newresume" element={<ResumeDocuments />} />
       </Routes>
       <Footer />
     </BrowserRouter>
