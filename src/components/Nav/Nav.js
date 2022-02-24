@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { SIDEBAR_INSIDE } from './SIDEBAR_INSIDE';
 import SideInside from './SideInside';
 import LogIn from '../../pages/Login/Login';
-import SignUp from '../../pages/Login/SignUp';
 import { api } from '../../api/config';
 
 const Nav = () => {
@@ -12,6 +11,7 @@ const Nav = () => {
   const [neededPlus, setNeededPlus] = useState(false);
   const [mypageAuth, setMypageAuth] = useState(false);
   const logAuth = sessionStorage.Authorization;
+  const navigate = useNavigate();
 
   const ModalHandler = () => {
     setModalOpen(prev => !prev);
@@ -26,13 +26,15 @@ const Nav = () => {
         },
       })
         .then(response => response.json())
-        .then(result =>
-          result.message === 'SUCCESS'
-            ? setNeededPlus(true)
-            : console.info('결과: ', result)
-        );
+        .then(result => setNeededPlus(result.result));
     }
-  }, [logAuth, neededPlus]);
+  }, [logAuth]);
+
+  const goToMypage = () => {
+    if (logAuth) {
+      navigate('/mypage');
+    } else alert('로그인이 필요합니다.');
+  };
 
   return (
     <Navigation>
@@ -91,12 +93,8 @@ const Nav = () => {
             <Search src="/images/nav/search.png" alt="search" />
           </SearchWrap>
           <LogIn setNeededPlus={setNeededPlus} setMypageAuth={setMypageAuth} />
-          <RoundBt>
-            {mypageAuth ? (
-              <StyledLink to="/mypage">마이페이지</StyledLink>
-            ) : (
-              <StyledLink to="/">기업페이지</StyledLink>
-            )}
+          <RoundBt onClick={goToMypage}>
+            <MypageBt>마이페이지</MypageBt>
           </RoundBt>
         </NavRight>
       </NavContainer>
@@ -223,5 +221,7 @@ const SlideBox = styled.div`
   background-color: white;
   border: 1px solid #e1e2e3;
 `;
+
+const MypageBt = styled.div``;
 
 export default Nav;
