@@ -6,8 +6,7 @@ import theme from '../../styles/theme';
 
 function WantedPlusLanding() {
   const navigate = useNavigate();
-  const JWT =
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.oj2DJLNHDWRZEbktjHoxmyAwMruKWcLn7tODAiHqe3c';
+  const JWT = window.sessionStorage.getItem('Authorization');
 
   const yesSubscribe = () => {
     fetch('http://15.165.203.121:8080/neededplus', {
