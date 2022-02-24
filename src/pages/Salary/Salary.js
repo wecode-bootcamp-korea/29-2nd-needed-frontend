@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import GraphComponent from './components/GraphComponent';
+import { api } from '../../api/config';
 
 function Salary() {
   const SALARY_DATA = [
@@ -105,7 +106,7 @@ function Salary() {
 
   useEffect(() => {
     fetch(
-      `http://10.58.7.168:8000/users/salary/${salaryCategoryURLFetcher(
+      `${api.fetchSalary}/${salaryCategoryURLFetcher(
         selectedValue.subSelected
       )}`
     )
@@ -123,8 +124,6 @@ function Salary() {
     }
   };
   changeSalaryData();
-
-  //console.log(fetchedSalary);
 
   return (
     <div>

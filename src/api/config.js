@@ -9,4 +9,5 @@ export const api = {
   fetchNeededPlus: BASE_URL + '/neededplus',
   fetchResume: BASE_URL + '/resumes',
   fetchApplication: BASE_URL + '/recruitments/applications',
+  fetchSalary: BASE_URL + '/users/salary',
 };
