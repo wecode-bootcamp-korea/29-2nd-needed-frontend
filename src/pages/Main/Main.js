@@ -1,6 +1,6 @@
 import React from 'react';
-import BannerItem from './BannerItem/BannerItem';
-import JobInfo from './JobInfo/JobInfo';
+// import BannerItem from './BannerItem/BannerItem';
+// import JobInfo from './JobInfo/JobInfo';
 import styled from 'styled-components';
 import BannerSlider from './ImageSlider/BannerSlider';
 import EventSlider from './ImageSlider/EventSlider';
@@ -33,7 +33,7 @@ function Main() {
             </h3>
           </BannerTop>
           <BannerBottom>
-            <BannerItem />
+            {/* <BannerItem /> */}
             <Button>첫 구독 0원 신청하기</Button>
           </BannerBottom>
         </SectionWrapper>
@@ -44,7 +44,7 @@ function Main() {
         <EventSlider />
         <AdditionalInfo>
           <h1>채용 정보를 찾고 계셨나요?</h1>
-          <JobInfo />
+          {/* <JobInfo /> */}
         </AdditionalInfo>
       </section>
     </div>
